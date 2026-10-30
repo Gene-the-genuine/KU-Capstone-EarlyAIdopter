@@ -5,19 +5,25 @@ import { authCookieOptions, type AuthCookieData } from "@/server/auth-cookie";
 /**
  * 페이지 접근 검사 (Next.js 16 부터 middleware.ts 의 새 이름이 proxy.ts 입니다)
  *
- * 로그인하지 않은 사람이 /counselor 아래 페이지를 열면 /login 으로 보냅니다.
+ * - 로그인하지 않은 사람이 /counselor 아래 페이지를 열면 /login 으로 보냅니다.
+ * - 이미 로그인한 상담사가 /login, /signup 을 열면 /counselor 로 보냅니다.
  * 이것은 화면 이동용 1차 검사일 뿐이고, 데이터 보호는 각 API 의 requireCounselor() 가 맡습니다.
  */
 export async function proxy(request: NextRequest) {
   const response = NextResponse.next();
   const auth = await getIronSession<AuthCookieData>(nextProxyCookies(request, response), authCookieOptions());
+  const loggedIn = Boolean(auth.counselorId);
+  const { pathname } = request.nextUrl;
 
-  if (!auth.counselorId) {
+  if (pathname === "/login" || pathname === "/signup") {
+    return loggedIn ? NextResponse.redirect(new URL("/counselor", request.url)) : response;
+  }
+  if (!loggedIn) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
   return response;
 }
 
 export const config = {
-  matcher: ["/counselor/:path*"],
+  matcher: ["/counselor/:path*", "/login", "/signup"],
 };

@@ -21,14 +21,17 @@
 
 ## 2. 색상 토큰
 
-> **구현 메모 (백엔드 작업 중 추가, 2026-10-29)**
+> **구현 메모 (2026-10-29 백엔드 작업 중 추가, 2026-10-30 화면 구현하며 갱신)**
 > 프로젝트는 **Tailwind CSS v4**로 만들어져서, 아래의 `tailwind.config.ts`(v3 방식)와 HSL 변수 대신 `src/app/globals.css`에 같은 색을 이미 넣어 두었습니다.
 > - 클래스 이름은 이 문서에 적힌 그대로 쓰면 됩니다: `bg-canvas`, `text-ink`, `bg-brand`, `hover:bg-brand-hover`, `bg-brand-soft`, `text-draft`, `bg-danger-soft`, `border-brand/30` …
 > - **예외 하나**: 보조 글자색 `text-muted` → **`text-muted-foreground`** 로 쓰세요. shadcn/ui에서 `muted`는 보조 *배경색* 이름이라, `text-muted`로 쓰면 글자가 배경색(거의 흰색)이 됩니다.
 > - shadcn/ui 컴포넌트는 Radix 기반으로 `src/components/ui/`에 들어 있습니다(Button, Input, Textarea, Label, Card, Badge, Dialog, AlertDialog, Checkbox, Sonner). 더 필요하면 `npx shadcn@latest add <이름>`.
 > - 폰트(IBM Plex Sans KR)는 `src/app/layout.tsx`에서 불러옵니다.
 > - shadcn/ui의 `Card`는 테두리를 `border`가 아니라 `ring`으로 그립니다. 공유 카드 강조(`border-brand/30`)는 `Card`에 쓸 때 **`ring-brand/30`**으로 쓰세요.
-> - shadcn/ui 기본 버튼·입력창 높이는 `h-8`입니다. 이 문서의 `h-10`(모바일 주요 버튼 `h-12`)은 `className="h-10"`처럼 직접 지정하세요.
+> - 버튼(`Button`) 기본 높이는 `h-8`입니다. 이 문서의 `h-10`(모바일 주요 버튼 `h-12`)은 `className="h-10"`처럼 직접 지정하세요. 입력창(`Input`)은 `h-10`이 기본이 되도록 고쳐 두었습니다.
+> - `src/components/ui/`의 몇 가지는 목업에 맞춰 고쳐 두었습니다: 기본 버튼 hover는 `brand-hover`, 보조(outline) 버튼 바탕은 흰색, `destructive`는 빨간 바탕에 흰 글자, `Dialog`·`AlertDialog`는 흰 카드(`p-6`, 최대 `max-w-md`)·왼쪽 정렬 제목·오른쪽 버튼·애니메이션 없음.
+> - 화면은 `src/app/login`, `signup`, `counselor`, `client/[token]`에 있습니다(README 2장). 여러 화면이 같이 쓰는 조각은 `src/components/*.tsx`: 상태 배지 `StatusBadge`, 공개 범위 칩 `ScopeChip`, 로딩·오류 문구 `feedback.tsx`, 입력 칸 `FormField`, 내담자 화면 틀 `client-shell.tsx`.
+> - 목업에 없던 상태(첫 AI 정리 버튼 "✦ AI로 정리하기", 하단 바의 "모든 변경 사항이 저장되었습니다", 내담자 0명 빈 화면, 로딩·불러오기 실패 화면)는 같은 규칙으로 추가했습니다.
 
 
 | 토큰 | HEX | 용도 |

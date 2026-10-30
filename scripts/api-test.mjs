@@ -279,7 +279,7 @@ async function scenario({ a, b, guest, userA, userB, createdClientIds }) {
   check("내담자 회기 상세 → 요약·과제 2개·질문 2개", r.status === 200 && view1?.clientSummary === content1.clientSummary && view1?.actionItems?.length === 2 && view1?.preparationQuestions?.length === 2, r.json);
   must(view1?.actionItems?.length && view1?.preparationQuestions?.length, "내담자 회기 상세 조회");
   check("내담자 회기 상세에 원문·상담사 기록·목적 메모 없음", findKeys(r.json, SECRET_FOR_CLIENT).length === 0, findKeys(r.json, SECRET_FOR_CLIENT));
-  check("공유 회기가 1개뿐이라 이전/다음 없음", r.json?.prevSessionId === null && r.json?.nextSessionId === null, r.json);
+  check("공유 회기가 1개뿐이라 이전/다음 없음", r.json?.prevSessionId === null && r.json?.nextSessionId === null && r.json?.prevSessionNumber === null && r.json?.nextSessionNumber === null, r.json);
   r = await guest.call("GET", `/api/client/wrong-token-1234567890/sessions/${s1.id}`);
   check("틀린 토큰 → 404", r.status === 404, r.json);
   r = await guest.call("GET", `/api/client/${clientB.shareToken}/sessions/${s1.id}`);
@@ -320,15 +320,15 @@ async function scenario({ a, b, guest, userA, userB, createdClientIds }) {
   r = await guest.call("GET", `/api/client/${token}`);
   check("내담자 홈: 날짜가 이른 2회기(10-13)가 1회기(10-20)보다 먼저", JSON.stringify(r.json?.sessions?.map((s) => s.sessionNumber)) === "[2,1]", r.json);
   r = await guest.call("GET", `/api/client/${token}/sessions/${s1.id}`);
-  check("1회기: 이전 = 2회기, 다음 없음 (작성 중 3회기는 건너뜀)", r.json?.prevSessionId === s2.id && r.json?.nextSessionId === null, r.json);
+  check("1회기: 이전 = 2회기, 다음 없음 (작성 중 3회기는 건너뜀)", r.json?.prevSessionId === s2.id && r.json?.prevSessionNumber === 2 && r.json?.nextSessionId === null, r.json);
   r = await a.call("POST", `${base3}/share`, { ...content1, sessionDate: "2026-10-20", clientSummary: "3회기 요약", actionItems: [], preparationQuestions: [] });
   check("3회기를 1회기와 같은 날짜로 공유 → 200", r.status === 200 && r.json?.session?.status === "shared", r.json);
   r = await guest.call("GET", `/api/client/${token}`);
   check("내담자 홈: 2회기 → 1회기 → 3회기 (같은 날짜는 회기 번호 순)", JSON.stringify(r.json?.sessions?.map((s) => s.sessionNumber)) === "[2,1,3]", r.json);
   r = await guest.call("GET", `/api/client/${token}/sessions/${s2.id}`);
-  check("2회기: 이전 없음, 다음 = 1회기", r.json?.prevSessionId === null && r.json?.nextSessionId === s1.id, r.json);
+  check("2회기: 이전 없음, 다음 = 1회기", r.json?.prevSessionId === null && r.json?.nextSessionId === s1.id && r.json?.nextSessionNumber === 1, r.json);
   r = await guest.call("GET", `/api/client/${token}/sessions/${s1.id}`);
-  check("1회기: 이전 = 2회기, 다음 = 3회기", r.json?.prevSessionId === s2.id && r.json?.nextSessionId === s3.id, r.json);
+  check("1회기: 이전 = 2회기, 다음 = 3회기", r.json?.prevSessionId === s2.id && r.json?.prevSessionNumber === 2 && r.json?.nextSessionId === s3.id && r.json?.nextSessionNumber === 3, r.json);
   r = await guest.call("GET", `/api/client/${token}/sessions/${s3.id}`);
   check("3회기: 이전 = 1회기, 다음 없음, 과제·질문이 없어도 정상", r.status === 200 && r.json?.prevSessionId === s1.id && r.json?.nextSessionId === null && r.json?.session?.actionItems?.length === 0, r.json);
 

@@ -8,7 +8,7 @@
 | 문서 | 내용 |
 |---|---|
 | [docs/SPEC.md](docs/SPEC.md) | 기능 명세. **무엇을 만들지의 기준** |
-| [docs/DESIGN.md](docs/DESIGN.md) | 화면 디자인 규칙 (색·글꼴·컴포넌트) |
+| [docs/DESIGN.md](docs/DESIGN.md) | 화면 디자인 규칙 (색·글꼴·컴포넌트). 화면 목업은 [docs/ui/](docs/ui/) (`_preview.html` 하나로 전체 보기) |
 | [docs/API.md](docs/API.md) | 백엔드 API 명세. 프론트엔드가 백엔드를 부르는 방법 |
 | [AGENTS.md](AGENTS.md) | 코딩 규칙 요약. AI 코딩 도구(Cursor, Codex, Claude Code)도 이 파일을 읽습니다 |
 
@@ -39,15 +39,21 @@ npm run test:api     # SPEC 10장 "완료 검증 시나리오"를 API로 그대�
 ## 2. 폴더 구조
 
 ```
-├── docs/                    문서 (SPEC, DESIGN, API)
+├── docs/                    문서 (SPEC, DESIGN, API) + ui/ 화면 목업 HTML
 ├── supabase/
 │   ├── schema.sql           DB 테이블·함수·보안 설정 (SQL Editor에 붙여넣어 실행)
 │   ├── seed.sql             시연용 가짜 데이터 (선택)
 │   └── reset.sql            개발용 초기화: 테이블을 전부 지움 (주의)
 ├── scripts/api-test.mjs     백엔드 자동 점검 (npm run test:api)
 └── src/
-    ├── proxy.ts             로그인 안 한 사람이 /counselor 페이지를 열면 /login 으로 보냄
+    ├── proxy.ts             로그인 안 한 사람이 /counselor 화면을 열면 /login 으로 (로그인한 사람이 /login 을 열면 대시보드로)
     ├── app/
+    │   ├── login/ · signup/ ★ 화면: 상담사 로그인 · 회원가입
+    │   ├── counselor/       ★ 화면: 상담사 대시보드
+    │   │   └── clients/[clientId]/sessions/[sessionId]/   회기 작성(작성 중) · 읽기 전용(공유 완료) · 공유 링크/QR
+    │   ├── client/[token]/  ★ 화면: 내담자 홈 (로그인 없이 링크로)
+    │   │   └── sessions/[sessionId]/   내담자 회기 상세 (과제 체크 · 메모)
+    │   ├── not-found.tsx    없는 주소 화면
     │   ├── api/             ★ 백엔드 API. 폴더 경로가 곧 URL (예: api/counselor/clients/route.ts → /api/counselor/clients)
     │   │   ├── auth/        회원가입·로그인·로그아웃·내 정보
     │   │   ├── counselor/   상담사용: 내담자·회기·AI 정리·공유
@@ -71,9 +77,15 @@ npm run test:api     # SPEC 10장 "완료 검증 시나리오"를 API로 그대�
     │   ├── api.ts           프론트에서 백엔드 부르는 함수: api.counselor.listClients() …
     │   ├── types.ts         API 응답 타입
     │   ├── schemas.ts       입력 규칙 (글자 수 제한, 오류 문구)
+    │   ├── format.ts        날짜 표시 (2026-10-20 → 2026.10.20)
+    │   ├── brand.ts         서비스 이름 (가칭 "회기노트" — 여기만 바꾸면 모든 화면이 바뀜)
     │   └── utils.ts         cn() (shadcn/ui 용 클래스 합치기)
-    └── components/ui/       shadcn/ui 컴포넌트 (Button, Dialog …)
+    └── components/
+        ├── ui/              shadcn/ui 컴포넌트 (Button, Dialog …). 목업 모양에 맞춰 조금 고쳐 둠
+        └── *.tsx            여러 화면이 함께 쓰는 조각: 상태 배지, 공개 범위 칩, 로딩·오류 문구, 입력 칸, 내담자 화면 틀
 ```
+
+**화면 폴더 읽는 법**: `page.tsx`는 탭 제목과 주소 값만 정하고, 실제 화면은 같은 폴더의 컴포넌트(`"use client"`)가 그립니다. 예를 들어 `/counselor` 화면은 `counselor/page.tsx` → `counselor/dashboard.tsx`입니다. 화면은 `src/lib/api.ts`의 `api.*`로 백엔드를 부릅니다.
 
 **프론트엔드는 `src/app`의 페이지와 `src/components`를, 백엔드는 `src/app/api`, `src/server`, `supabase`를 맡습니다.** 둘의 약속(계약)은 `src/lib`에 있습니다.
 

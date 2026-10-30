@@ -116,7 +116,9 @@ export async function getClientSession(token: string, sessionId: string): Promis
         .map((item) => ({ id: item.id, question: item.question, clientAnswer: item.client_answer })),
     },
     prevSessionId: sharedSessions[index - 1]?.id ?? null,
+    prevSessionNumber: sharedSessions[index - 1]?.session_number ?? null,
     nextSessionId: sharedSessions[index + 1]?.id ?? null,
+    nextSessionNumber: sharedSessions[index + 1]?.session_number ?? null,
   };
 }
 

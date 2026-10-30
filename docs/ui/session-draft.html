@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D-1. 상담사 회기 페이지 · 작성 중 (/counselor/clients/[clientId]/sessions/[sessionId])</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['"IBM Plex Sans KR"', '"Apple SD Gothic Neo"', '"Malgun Gothic"', 'sans-serif'] },
+  colors: {
+    canvas: '#F5F7F6', surface: '#FFFFFF', ink: '#1E2925', muted: '#5B6862', line: '#DFE5E2',
+    brand: { DEFAULT: '#2E6A5C', hover: '#25574B', soft: '#E7F1EE' },
+    draft: { DEFAULT: '#9A5B0B', soft: '#FDF3E1' },
+    danger: { DEFAULT: '#B4321F', soft: '#FCEBE8' }
+  } } } };
+</script>
+<style>[hidden] { display: none !important; }</style>
+</head>
+<body class="min-h-screen bg-canvas pb-36 sm:pb-28 font-sans text-ink antialiased">
+
+<header class="border-b border-line bg-surface">
+  <div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
+    <a href="dashboard.html" class="inline-flex h-8 items-center gap-1 rounded-md px-2 text-sm text-muted hover:bg-canvas hover:text-ink">‹ 대시보드로 돌아가기</a>
+    <p class="text-sm font-semibold text-brand">회기노트</p>
+  </div>
+</header>
+
+<main class="mx-auto max-w-5xl space-y-6 px-4 py-6">
+
+  <!-- 회기 정보 -->
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <p class="text-sm text-muted">김하늘</p>
+      <div class="mt-1 flex items-center gap-3">
+        <h1 class="text-2xl font-bold">2회기</h1>
+        <span class="rounded-full bg-draft-soft px-2.5 py-0.5 text-xs font-medium text-draft">작성 중</span>
+      </div>
+    </div>
+    <div class="space-y-1">
+      <label for="session-date" class="block text-xs font-medium text-muted">상담 날짜</label>
+      <input id="session-date" type="date" value="2026-10-20" class="h-9 rounded-md border border-line bg-surface px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25">
+    </div>
+  </div>
+
+  <!-- 상담 원문 -->
+  <section class="rounded-xl border border-line bg-surface p-5">
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <h2 class="text-base font-semibold">상담 원문</h2>
+        <span class="rounded bg-canvas px-1.5 py-0.5 text-[11px] font-medium text-muted">상담사만</span>
+      </div>
+      <span class="text-xs text-muted tabular-nums">412자</span>
+    </div>
+    <label for="source-text" class="sr-only">상담 원문</label>
+    <textarea id="source-text" rows="9" class="mt-3 w-full rounded-md border border-line px-3 py-2.5 text-sm leading-relaxed focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25">상담사: 지난 한 주 어떻게 지내셨어요?
+내담자: 지원서를 쓰려고 했는데 막상 앉으면 뭘 써야 할지 몰라서 계속 미뤘어요. 부모님은 공기업을 원하시는데, 저는 아직 확신이 없어요.
+상담사: 미루게 될 때 어떤 생각이 드세요?
+내담자: 잘못 고르면 돌이킬 수 없을 것 같다는 생각이요.
+상담사: 이번 주에는 관심 있는 직무 세 가지를 적어보고, 각각 끌리는 이유를 한 줄씩 써보면 어떨까요?
+내담자: 네, 해볼게요. 그리고 하루 30분은 지원서랑 상관없이 산책하는 시간을 가져볼게요.</textarea>
+
+    <div class="mt-3 flex flex-wrap items-center gap-3">
+      <button data-open="modal-regenerate" class="inline-flex h-10 items-center gap-2 rounded-md bg-ink px-4 text-sm font-medium text-white hover:opacity-90">✦ AI로 다시 정리하기</button>
+      <!-- 생성 중 상태 예시 -->
+      <button disabled class="inline-flex h-10 cursor-not-allowed items-center gap-2 rounded-md bg-ink/50 px-4 text-sm font-medium text-white">
+        <span class="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white motion-reduce:animate-none" aria-hidden="true"></span>정리하는 중…
+      </button>
+      <span class="text-xs text-muted">AI는 이 회기의 원문만 참고합니다.</span>
+    </div>
+
+    <!-- 생성 실패 상태 예시 -->
+    <div role="alert" class="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-md bg-danger-soft px-3 py-2 text-sm text-danger">
+      <span>AI 정리에 실패했습니다. 입력한 원문과 현재 결과는 그대로 남아 있습니다.</span>
+      <button class="font-medium underline underline-offset-4">다시 시도</button>
+    </div>
+  </section>
+
+  <!-- AI 결과 -->
+  <section class="space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="text-base font-semibold">AI 정리 결과 <span class="font-normal text-muted">· 검토 후 수정하세요</span></h2>
+    </div>
+
+    <div class="grid gap-4 lg:grid-cols-2">
+      <div class="min-w-0 rounded-xl border border-line bg-surface p-5">
+        <div class="flex items-center gap-2">
+          <label for="counselor-note" class="text-sm font-semibold">상담사용 상세 기록</label>
+          <span class="rounded bg-canvas px-1.5 py-0.5 text-[11px] font-medium text-muted">상담사만</span>
+        </div>
+        <textarea id="counselor-note" rows="10" class="mt-3 w-full rounded-md border border-line px-3 py-2.5 text-sm leading-relaxed focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25">[주제] 진로 결정 지연과 불안
+
+[주요 내용] 지원서 작성을 반복적으로 미룸. 부모의 기대(공기업)와 본인의 불확실성 사이에서 갈등을 표현함.
+
+[감정 표현] "잘못 고르면 돌이킬 수 없을 것 같다"는 두려움을 언급함.
+
+[합의 사항] 관심 직무 3가지와 이유 정리, 하루 30분 산책.</textarea>
+      </div>
+
+      <div class="min-w-0 rounded-xl border border-brand/30 bg-surface p-5">
+        <div class="flex items-center gap-2">
+          <label for="client-summary" class="text-sm font-semibold">내담자용 요약</label>
+          <span class="rounded bg-brand-soft px-1.5 py-0.5 text-[11px] font-medium text-brand">내담자에게 공유</span>
+        </div>
+        <textarea id="client-summary" rows="10" class="mt-3 w-full rounded-md border border-line px-3 py-2.5 text-sm leading-relaxed focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25">이번 상담에서는 지원서를 쓰려고 할 때마다 미루게 되는 마음에 대해 이야기를 나눴어요. 선택을 잘못하면 돌이킬 수 없을 것 같다는 걱정이 크게 느껴진다고 말씀해 주셨어요. 부모님의 기대와 하늘 님의 마음 사이에서 고민하고 계신다는 점도 함께 살펴봤어요. 다음 상담 전까지 관심 있는 직무를 가볍게 적어보고, 하루 30분은 쉬어가는 시간을 갖기로 했어요.</textarea>
+      </div>
+    </div>
+
+    <div class="grid gap-4 lg:grid-cols-2">
+      <!-- 실천 과제 -->
+      <div class="min-w-0 rounded-xl border border-brand/30 bg-surface p-5">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <h3 class="text-sm font-semibold">실천 과제</h3>
+            <span class="rounded bg-brand-soft px-1.5 py-0.5 text-[11px] font-medium text-brand">내담자에게 공유</span>
+          </div>
+          <span class="text-xs text-muted">2개</span>
+        </div>
+        <ul class="mt-3 space-y-2">
+          <li class="flex items-center gap-2">
+            <label for="ai-1" class="sr-only">실천 과제 1</label>
+            <input id="ai-1" value="관심 있는 직무 3가지를 적고, 끌리는 이유를 한 줄씩 쓰기" class="h-10 min-w-0 flex-1 rounded-md border border-line px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25">
+            <button aria-label="실천 과제 1 삭제" class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-muted hover:bg-danger-soft hover:text-danger">✕</button>
+          </li>
+          <li class="flex items-center gap-2">
+            <label for="ai-2" class="sr-only">실천 과제 2</label>
+            <input id="ai-2" value="하루 30분, 지원서와 상관없이 산책하기" class="h-10 min-w-0 flex-1 rounded-md border border-line px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25">
+            <button aria-label="실천 과제 2 삭제" class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-muted hover:bg-danger-soft hover:text-danger">✕</button>
+          </li>
+        </ul>
+        <button class="mt-3 inline-flex h-9 items-center rounded-md border border-dashed border-line px-3 text-sm text-muted hover:border-brand hover:text-brand">+ 과제 추가</button>
+      </div>
+
+      <!-- 준비 질문 -->
+      <div class="min-w-0 rounded-xl border border-brand/30 bg-surface p-5">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <h3 class="text-sm font-semibold">다음 상담 준비 질문</h3>
+            <span class="rounded bg-brand-soft px-1.5 py-0.5 text-[11px] font-medium text-brand">내담자에게 공유</span>
+          </div>
+          <span class="text-xs text-muted">2개</span>
+        </div>
+        <ul class="mt-3 space-y-2">
+          <li class="flex items-center gap-2">
+            <label for="pq-1" class="sr-only">준비 질문 1</label>
+            <input id="pq-1" value="선택을 미루고 싶어질 때, 그 순간 가장 걱정되는 것은 무엇인가요?" class="h-10 min-w-0 flex-1 rounded-md border border-line px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25">
+            <button aria-label="준비 질문 1 삭제" class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-muted hover:bg-danger-soft hover:text-danger">✕</button>
+          </li>
+          <li class="flex items-center gap-2">
+            <label for="pq-2" class="sr-only">준비 질문 2</label>
+            <input id="pq-2" value="부모님의 기대와 내 마음이 겹치는 부분이 있다면 어디일까요?" class="h-10 min-w-0 flex-1 rounded-md border border-line px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25">
+            <button aria-label="준비 질문 2 삭제" class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-muted hover:bg-danger-soft hover:text-danger">✕</button>
+          </li>
+        </ul>
+        <button class="mt-3 inline-flex h-9 items-center rounded-md border border-dashed border-line px-3 text-sm text-muted hover:border-brand hover:text-brand">+ 질문 추가</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- 하단 고정 액션 바 -->
+<div class="fixed inset-x-0 bottom-0 border-t border-line bg-surface/95 backdrop-blur">
+  <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3">
+    <p class="flex items-center gap-2 text-sm text-draft"><span class="h-2 w-2 rounded-full bg-draft" aria-hidden="true"></span>저장하지 않은 변경 사항이 있습니다</p>
+    <div class="flex w-full gap-2 sm:w-auto">
+      <button class="inline-flex h-11 flex-1 items-center justify-center rounded-md border border-line bg-surface px-4 text-sm font-medium hover:bg-canvas sm:h-10 sm:flex-none">임시 저장</button>
+      <button data-open="modal-share" class="inline-flex h-11 flex-1 items-center justify-center rounded-md bg-brand px-4 text-sm font-medium text-white hover:bg-brand-hover sm:h-10 sm:flex-none">공유 확정</button>
+    </div>
+  </div>
+</div>
+
+<!-- 모달: AI 재생성 확인 -->
+<div id="modal-regenerate" hidden class="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 px-4">
+  <div role="alertdialog" aria-modal="true" aria-labelledby="regen-title" class="w-full max-w-md rounded-xl bg-surface p-6 shadow-xl">
+    <h2 id="regen-title" class="text-lg font-semibold">AI로 다시 정리할까요?</h2>
+    <p class="mt-2 text-sm leading-relaxed text-muted">상담사용 기록, 내담자용 요약, 실천 과제, 준비 질문이 새 결과로 모두 바뀝니다. 직접 수정한 내용도 사라집니다.</p>
+    <div class="mt-6 flex justify-end gap-2">
+      <button type="button" data-close class="inline-flex h-10 items-center rounded-md border border-line px-4 text-sm font-medium hover:bg-canvas">취소</button>
+      <button type="button" class="inline-flex h-10 items-center rounded-md bg-ink px-4 text-sm font-medium text-white hover:opacity-90">다시 정리하기</button>
+    </div>
+  </div>
+</div>
+
+<!-- 모달: 공유 확정 확인 -->
+<div id="modal-share" hidden class="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 px-4">
+  <div role="alertdialog" aria-modal="true" aria-labelledby="share-title" class="w-full max-w-md rounded-xl bg-surface p-6 shadow-xl">
+    <h2 id="share-title" class="text-lg font-semibold">2회기를 내담자에게 공유할까요?</h2>
+    <p class="mt-2 text-sm leading-relaxed text-muted">공유하면 이 회기의 기록은 더 이상 수정할 수 없습니다. 내담자는 아래 내용만 볼 수 있습니다.</p>
+    <ul class="mt-3 space-y-1 rounded-md bg-canvas px-4 py-3 text-sm">
+      <li>✓ 내담자용 요약</li>
+      <li>✓ 실천 과제 2개</li>
+      <li>✓ 다음 상담 준비 질문 2개</li>
+    </ul>
+    <div class="mt-6 flex justify-end gap-2">
+      <button type="button" data-close class="inline-flex h-10 items-center rounded-md border border-line px-4 text-sm font-medium hover:bg-canvas">취소</button>
+      <a href="session-shared.html" class="inline-flex h-10 items-center rounded-md bg-brand px-4 text-sm font-medium text-white hover:bg-brand-hover">공유 확정</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// 미리보기용 모달 토글 (실제 구현은 shadcn/ui AlertDialog 사용)
+document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => { document.getElementById(b.dataset.open).hidden = false; }));
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => { b.closest('[id^="modal-"]').hidden = true; }));
+document.querySelectorAll('[id^="modal-"]').forEach(m => m.addEventListener('click', e => { if (e.target === m) m.hidden = true; }));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('[id^="modal-"]').forEach(m => m.hidden = true); });
+</script>
+</body>
+</html>

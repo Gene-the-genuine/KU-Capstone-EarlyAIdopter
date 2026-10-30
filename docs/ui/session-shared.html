@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D-2. 상담사 회기 페이지 · 공유 완료(읽기 전용) + 공유 모달</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['"IBM Plex Sans KR"', '"Apple SD Gothic Neo"', '"Malgun Gothic"', 'sans-serif'] },
+  colors: {
+    canvas: '#F5F7F6', surface: '#FFFFFF', ink: '#1E2925', muted: '#5B6862', line: '#DFE5E2',
+    brand: { DEFAULT: '#2E6A5C', hover: '#25574B', soft: '#E7F1EE' },
+    draft: { DEFAULT: '#9A5B0B', soft: '#FDF3E1' },
+    danger: { DEFAULT: '#B4321F', soft: '#FCEBE8' }
+  } } } };
+</script>
+<style>[hidden] { display: none !important; }</style>
+</head>
+<body class="min-h-screen bg-canvas font-sans text-ink antialiased">
+
+<header class="border-b border-line bg-surface">
+  <div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
+    <a href="dashboard.html" class="inline-flex h-8 items-center gap-1 rounded-md px-2 text-sm text-muted hover:bg-canvas hover:text-ink">‹ 대시보드로 돌아가기</a>
+    <p class="text-sm font-semibold text-brand">회기노트</p>
+  </div>
+</header>
+
+<main class="mx-auto max-w-5xl space-y-6 px-4 py-6">
+
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <p class="text-sm text-muted">김하늘</p>
+      <div class="mt-1 flex items-center gap-3">
+        <h1 class="text-2xl font-bold">1회기</h1>
+        <span class="rounded-full bg-brand-soft px-2.5 py-0.5 text-xs font-medium text-brand">공유 완료</span>
+      </div>
+      <p class="mt-1 text-sm text-muted tabular-nums">상담 날짜 2026.10.13 · 공유 2026.10.14</p>
+    </div>
+    <button data-open="modal-link" class="inline-flex h-10 items-center rounded-md bg-brand px-4 text-sm font-medium text-white hover:bg-brand-hover">공유 링크 보기</button>
+  </div>
+
+  <p class="rounded-md border border-line bg-surface px-4 py-3 text-sm text-muted">공유된 회기는 수정할 수 없습니다. 내담자의 과제 체크와 메모는 내담자만 볼 수 있습니다.</p>
+
+  <section class="rounded-xl border border-line bg-surface p-5">
+    <div class="flex items-center gap-2">
+      <h2 class="text-base font-semibold">상담 원문</h2>
+      <span class="rounded bg-canvas px-1.5 py-0.5 text-[11px] font-medium text-muted">상담사만</span>
+    </div>
+    <div class="mt-3 max-h-48 overflow-y-auto whitespace-pre-line rounded-md bg-canvas px-4 py-3 text-sm leading-relaxed">상담사: 오늘 어떤 이야기를 나누고 싶으세요?
+내담자: 졸업이 다가오는데 뭘 해야 할지 모르겠어요. 다들 준비가 되어 있는 것 같은데 저만 멈춰 있는 느낌이에요.
+상담사: 멈춰 있다고 느낄 때 주로 어떤 상황인가요?
+내담자: 친구들 취업 소식 들을 때요. 그날은 아무것도 손에 안 잡혀요.
+상담사: 다음 주까지 그런 순간이 오면 그때 든 생각을 짧게 메모해 보면 어떨까요?
+내담자: 네, 해볼게요.</div>
+  </section>
+
+  <div class="grid gap-4 lg:grid-cols-2">
+    <section class="min-w-0 rounded-xl border border-line bg-surface p-5">
+      <div class="flex items-center gap-2">
+        <h2 class="text-sm font-semibold">상담사용 상세 기록</h2>
+        <span class="rounded bg-canvas px-1.5 py-0.5 text-[11px] font-medium text-muted">상담사만</span>
+      </div>
+      <p class="mt-3 whitespace-pre-line text-sm leading-relaxed">[주제] 졸업 앞둔 진로 불안, 또래 비교
+
+[주요 내용] 친구들의 취업 소식을 들을 때 무력감을 느끼며 일상 활동에 집중하기 어려움을 보고함.
+
+[합의 사항] 비교로 인해 멈춰 있다고 느끼는 순간의 생각을 짧게 메모하기.</p>
+    </section>
+
+    <section class="min-w-0 rounded-xl border border-line bg-surface p-5">
+      <div class="flex items-center gap-2">
+        <h2 class="text-sm font-semibold">내담자용 요약</h2>
+        <span class="rounded bg-brand-soft px-1.5 py-0.5 text-[11px] font-medium text-brand">공유됨</span>
+      </div>
+      <p class="mt-3 text-sm leading-relaxed">첫 상담에서는 졸업을 앞두고 혼자 멈춰 있는 것 같은 마음에 대해 이야기를 나눴어요. 특히 친구들의 취업 소식을 들을 때 그 마음이 커진다고 말씀해 주셨어요. 다음 상담까지는 그런 순간에 떠오른 생각을 짧게 적어보기로 했어요.</p>
+    </section>
+
+    <section class="min-w-0 rounded-xl border border-line bg-surface p-5">
+      <div class="flex items-center gap-2">
+        <h2 class="text-sm font-semibold">실천 과제</h2>
+        <span class="rounded bg-brand-soft px-1.5 py-0.5 text-[11px] font-medium text-brand">공유됨</span>
+      </div>
+      <ol class="mt-3 list-decimal space-y-1.5 pl-5 text-sm">
+        <li>멈춰 있다고 느끼는 순간, 떠오른 생각을 한 줄로 메모하기</li>
+      </ol>
+    </section>
+
+    <section class="min-w-0 rounded-xl border border-line bg-surface p-5">
+      <div class="flex items-center gap-2">
+        <h2 class="text-sm font-semibold">다음 상담 준비 질문</h2>
+        <span class="rounded bg-brand-soft px-1.5 py-0.5 text-[11px] font-medium text-brand">공유됨</span>
+      </div>
+      <ol class="mt-3 list-decimal space-y-1.5 pl-5 text-sm">
+        <li>다른 사람과 비교하지 않았을 때, 나는 어떤 일에 시간을 쓰고 싶나요?</li>
+        <li>이번 주에 조금이라도 편안했던 순간은 언제였나요?</li>
+      </ol>
+    </section>
+  </div>
+</main>
+
+<!-- 모달: 공유 링크 / QR (공유 확정 직후 자동 표시, '공유 링크 보기'로 재표시) -->
+<div id="modal-link" hidden class="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 px-4">
+  <div role="dialog" aria-modal="true" aria-labelledby="link-title" class="w-full max-w-md rounded-xl bg-surface p-6 shadow-xl">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <h2 id="link-title" class="text-lg font-semibold">1회기가 공유되었습니다</h2>
+        <p class="mt-1 text-sm text-muted">아래 링크나 QR 코드를 내담자에게 전달하세요.</p>
+      </div>
+      <button data-close aria-label="닫기" class="inline-flex h-8 w-8 items-center justify-center rounded-md text-muted hover:bg-canvas">✕</button>
+    </div>
+
+    <div class="mt-5 flex justify-center">
+      <div class="rounded-lg border border-line bg-white p-3">
+        <svg id="qr" width="160" height="160" viewBox="0 0 25 25" role="img" aria-label="공유 링크 QR 코드 (예시)" shape-rendering="crispEdges"></svg>
+      </div>
+    </div>
+    <p class="mt-2 text-center text-xs text-muted">예시 이미지 · 실제 구현은 qrcode.react</p>
+
+    <label for="share-url" class="mt-5 block text-sm font-medium">공유 링크</label>
+    <div class="mt-1.5 flex gap-2">
+      <input id="share-url" readonly value="https://hoegi-note.vercel.app/client/k7Qp2x9LmZ/sessions/3f2a9c1e" class="h-10 min-w-0 flex-1 rounded-md border border-line bg-canvas px-3 text-sm text-muted">
+      <button id="copy-btn" class="inline-flex h-10 shrink-0 items-center rounded-md border border-line px-4 text-sm font-medium hover:bg-canvas">복사</button>
+    </div>
+    <div class="mt-2 text-right">
+      <a href="client-home.html" class="text-sm font-medium text-brand underline-offset-4 hover:underline">내담자 화면으로 열어보기 ↗</a>
+    </div>
+    <p class="mt-3 text-xs leading-relaxed text-muted">링크를 가진 사람은 누구나 이 내담자의 공유된 회기를 볼 수 있습니다.</p>
+  </div>
+</div>
+
+<script>
+// 미리보기용 모달 토글 (실제 구현은 shadcn/ui Dialog 사용)
+document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => { document.getElementById(b.dataset.open).hidden = false; }));
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => { b.closest('[id^="modal-"]').hidden = true; }));
+document.querySelectorAll('[id^="modal-"]').forEach(m => m.addEventListener('click', e => { if (e.target === m) m.hidden = true; }));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('[id^="modal-"]').forEach(m => m.hidden = true); });
+
+// 복사 버튼 (실제 구현: navigator.clipboard.writeText + 토스트)
+document.getElementById('copy-btn').addEventListener('click', e => {
+  const input = document.getElementById('share-url');
+  const done = () => { e.target.textContent = '복사됨'; setTimeout(() => e.target.textContent = '복사', 1500); };
+  try { navigator.clipboard.writeText(input.value).then(done, () => { input.select(); }); } catch { input.select(); }
+});
+
+// 예시용 QR 모양 그리기 (실제 QR 아님)
+(function () {
+  const svg = document.getElementById('qr'), n = 25, ns = 'http://www.w3.org/2000/svg';
+  let s = 7;
+  const rnd = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+  const finder = (x, y, i, j) => {
+    const dx = i - x, dy = j - y;
+    if (dx < 0 || dy < 0 || dx > 6 || dy > 6) return null;
+    return dx === 0 || dy === 0 || dx === 6 || dy === 6 || (dx >= 2 && dx <= 4 && dy >= 2 && dy <= 4);
+  };
+  for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
+    let on = finder(0, 0, i, j);
+    if (on === null) on = finder(n - 7, 0, i, j);
+    if (on === null) on = finder(0, n - 7, i, j);
+    if (on === null) on = rnd() > 0.52;
+    if (on) { const r = document.createElementNS(ns, 'rect'); r.setAttribute('x', i); r.setAttribute('y', j); r.setAttribute('width', 1); r.setAttribute('height', 1); r.setAttribute('fill', '#1E2925'); svg.appendChild(r); }
+  }
+})();
+</script>
+</body>
+</html>

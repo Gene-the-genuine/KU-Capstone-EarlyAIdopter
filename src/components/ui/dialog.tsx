@@ -7,6 +7,12 @@ import { Dialog as DialogPrimitive } from "radix-ui"
 import { Button } from "@/components/ui/button"
 import { XIcon } from "lucide-react"
 
+/*
+ * 일반 모달 (내담자 추가 · 공유 링크/QR)
+ * shadcn/ui 기본 모양을 docs/ui/*.html 목업에 맞춰 고쳤습니다:
+ * 흰 카드(p-6, 최대 max-w-md) · 제목 text-lg · 오른쪽 위 닫기(✕) · 애니메이션 없음(DESIGN.md 1장)
+ */
+
 function Dialog({
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Root>) {
@@ -38,10 +44,7 @@ function DialogOverlay({
   return (
     <DialogPrimitive.Overlay
       data-slot="dialog-overlay"
-      className={cn(
-        "fixed inset-0 isolate z-50 bg-black/10 duration-100 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0",
-        className
-      )}
+      className={cn("fixed inset-0 isolate z-50 bg-ink/40", className)}
       {...props}
     />
   )
@@ -61,7 +64,7 @@ function DialogContent({
       <DialogPrimitive.Content
         data-slot="dialog-content"
         className={cn(
-          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl bg-popover p-4 text-sm text-popover-foreground ring-1 ring-foreground/10 duration-100 outline-none sm:max-w-sm data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+          "fixed top-1/2 left-1/2 z-50 max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-xl bg-popover p-6 text-sm text-popover-foreground shadow-xl outline-none",
           className
         )}
         {...props}
@@ -71,12 +74,11 @@ function DialogContent({
           <DialogPrimitive.Close data-slot="dialog-close" asChild>
             <Button
               variant="ghost"
-              className="absolute top-2 right-2"
-              size="icon-sm"
+              className="absolute top-4 right-4 text-muted-foreground"
+              size="icon"
             >
-              <XIcon
-              />
-              <span className="sr-only">Close</span>
+              <XIcon />
+              <span className="sr-only">닫기</span>
             </Button>
           </DialogPrimitive.Close>
         )}
@@ -89,7 +91,7 @@ function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-header"
-      className={cn("flex flex-col gap-2", className)}
+      className={cn("flex flex-col gap-1 pr-8 text-left", className)}
       {...props}
     />
   )
@@ -107,7 +109,7 @@ function DialogFooter({
     <div
       data-slot="dialog-footer"
       className={cn(
-        "-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-muted/50 p-4 sm:flex-row sm:justify-end",
+        "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
         className
       )}
       {...props}
@@ -115,7 +117,9 @@ function DialogFooter({
       {children}
       {showCloseButton && (
         <DialogPrimitive.Close asChild>
-          <Button variant="outline">Close</Button>
+          <Button variant="outline" className="h-10 px-4">
+            닫기
+          </Button>
         </DialogPrimitive.Close>
       )}
     </div>
@@ -129,10 +133,7 @@ function DialogTitle({
   return (
     <DialogPrimitive.Title
       data-slot="dialog-title"
-      className={cn(
-        "font-heading text-base leading-none font-medium",
-        className
-      )}
+      className={cn("text-lg font-semibold", className)}
       {...props}
     />
   )
@@ -145,10 +146,7 @@ function DialogDescription({
   return (
     <DialogPrimitive.Description
       data-slot="dialog-description"
-      className={cn(
-        "text-sm text-muted-foreground *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground",
-        className
-      )}
+      className={cn("text-sm text-muted-foreground", className)}
       {...props}
     />
   )

@@ -135,3 +135,13 @@ export const api = {
 export function shareUrl(sharePath: string): string {
   return `${window.location.origin}${sharePath}`;
 }
+
+/** 로그인이 풀려서(401) 실패했는지. 상담사 화면에서는 이때 /login 으로 보냅니다. */
+export function isUnauthorized(error: unknown): boolean {
+  return error instanceof ApiError && error.status === 401;
+}
+
+/** 화면에 보여 줄 오류 문장 */
+export function errorMessage(error: unknown): string {
+  return error instanceof ApiError ? error.message : "알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도하세요.";
+}

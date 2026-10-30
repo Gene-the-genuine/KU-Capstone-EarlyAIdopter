@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E. 내담자 홈 (/client/[token]) · 반응형</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['"IBM Plex Sans KR"', '"Apple SD Gothic Neo"', '"Malgun Gothic"', 'sans-serif'] },
+  colors: {
+    canvas: '#F5F7F6', surface: '#FFFFFF', ink: '#1E2925', muted: '#5B6862', line: '#DFE5E2',
+    brand: { DEFAULT: '#2E6A5C', hover: '#25574B', soft: '#E7F1EE' },
+    draft: { DEFAULT: '#9A5B0B', soft: '#FDF3E1' },
+    danger: { DEFAULT: '#B4321F', soft: '#FCEBE8' }
+  } } } };
+</script>
+<style>[hidden] { display: none !important; }</style>
+</head>
+<body class="min-h-screen bg-canvas font-sans text-ink antialiased">
+<header class="border-b border-line bg-surface">
+  <div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
+    <p class="text-sm font-semibold text-brand">회기노트</p>
+    <span class="text-sm text-muted">김하늘 님</span>
+  </div>
+</header>
+<main class="mx-auto max-w-5xl px-4 pb-12 pt-8 lg:grid lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-8">
+
+  <!-- 데스크톱: 왼쪽 고정 프로필 / 모바일: 위쪽 -->
+  <aside class="min-w-0 lg:sticky lg:top-6 lg:self-start">
+    <h1 class="text-2xl font-bold leading-snug">김하늘 님의<br>상담 기록</h1>
+    <p class="mt-2 text-sm text-muted tabular-nums">생년월일 1999.03.14</p>
+    <p class="mt-6 rounded-lg bg-brand-soft px-4 py-3 text-sm leading-relaxed text-brand">상담사 선생님이 확인한 내용만 이곳에 보여요. 과제 체크와 메모는 하늘 님만 볼 수 있어요.</p>
+  </aside>
+
+  <div class="mt-8 min-w-0 lg:mt-0">
+    <section>
+      <h2 class="text-base font-semibold">공유된 회기 <span class="font-normal text-muted">2개</span></h2>
+      <ul class="mt-3 grid gap-3 md:grid-cols-2">
+        <li>
+          <a href="client-session.html" class="flex h-full flex-col rounded-xl border border-line bg-surface p-5 hover:border-brand/50">
+            <div class="flex items-center justify-between">
+              <span class="text-lg font-semibold">2회기</span>
+              <span class="text-sm text-muted tabular-nums">2026.10.20</span>
+            </div>
+            <p class="mt-2 line-clamp-2 flex-1 text-[15px] leading-relaxed text-muted">지원서를 쓰려고 할 때마다 미루게 되는 마음에 대해 이야기를 나눴어요.</p>
+            <div class="mt-4 flex items-center gap-3">
+              <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-canvas"><div class="h-full w-1/2 rounded-full bg-brand"></div></div>
+              <span class="text-xs text-muted tabular-nums">과제 2개 중 1개 완료</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="client-session.html" class="flex h-full flex-col rounded-xl border border-line bg-surface p-5 hover:border-brand/50">
+            <div class="flex items-center justify-between">
+              <span class="text-lg font-semibold">1회기</span>
+              <span class="text-sm text-muted tabular-nums">2026.10.13</span>
+            </div>
+            <p class="mt-2 line-clamp-2 flex-1 text-[15px] leading-relaxed text-muted">졸업을 앞두고 혼자 멈춰 있는 것 같은 마음에 대해 이야기를 나눴어요.</p>
+            <div class="mt-4 flex items-center gap-3">
+              <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-canvas"><div class="h-full w-full rounded-full bg-brand"></div></div>
+              <span class="text-xs text-muted tabular-nums">과제 1개 중 1개 완료</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 빈 상태 예시: 공유된 회기가 없을 때 -->
+    <section class="mt-8 rounded-xl border border-dashed border-line bg-surface px-5 py-8 text-center">
+      <p class="text-xs font-medium text-muted">빈 상태 예시</p>
+      <p class="mt-2 text-[15px] font-medium">아직 공유된 상담 기록이 없어요</p>
+      <p class="mt-1 text-sm text-muted">상담사 선생님이 기록을 공유하면 여기에 표시돼요.</p>
+    </section>
+  </div>
+</main>
+</body>
+</html>

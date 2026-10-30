@@ -167,7 +167,9 @@ export type ClientSessionResponse = {
   client: ClientProfile;
   session: ClientSessionDetail;
   prevSessionId: string | null; // 이전 공유 회기 (없으면 null)
+  prevSessionNumber: number | null; // 그 회기의 번호 (버튼 글자 "‹ 1회기" 용)
   nextSessionId: string | null; // 다음 공유 회기 (없으면 null)
+  nextSessionNumber: number | null;
 };
 export type ActionItemResponse = { actionItem: ClientActionItem };
 export type AnswersResponse = { preparationQuestions: ClientQuestion[] };

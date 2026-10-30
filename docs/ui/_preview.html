@@ -1,0 +1,975 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>회기노트</title>
+<style>
+html, body { height: 100%; margin: 0; background: #F5F7F6; }
+#view { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block; background: #F5F7F6; }
+</style>
+</head>
+<body>
+<iframe id="view" title="회기노트"></iframe>
+<template data-screen="client-home">&lt;!doctype html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;E. 내담자 홈 (/client/[token]) · 반응형&lt;/title&gt;
+&lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap"&gt;
+&lt;script src="https://cdn.tailwindcss.com/3.4.17"&gt;&lt;/script&gt;
+&lt;script&gt;
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['"IBM Plex Sans KR"', '"Apple SD Gothic Neo"', '"Malgun Gothic"', 'sans-serif'] },
+  colors: {
+    canvas: '#F5F7F6', surface: '#FFFFFF', ink: '#1E2925', muted: '#5B6862', line: '#DFE5E2',
+    brand: { DEFAULT: '#2E6A5C', hover: '#25574B', soft: '#E7F1EE' },
+    draft: { DEFAULT: '#9A5B0B', soft: '#FDF3E1' },
+    danger: { DEFAULT: '#B4321F', soft: '#FCEBE8' }
+  } } } };
+&lt;/script&gt;
+&lt;style&gt;[hidden] { display: none !important; }&lt;/style&gt;
+&lt;/head&gt;
+&lt;body class="min-h-screen bg-canvas font-sans text-ink antialiased"&gt;
+&lt;header class="border-b border-line bg-surface"&gt;
+  &lt;div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-4"&gt;
+    &lt;p class="text-sm font-semibold text-brand"&gt;회기노트&lt;/p&gt;
+    &lt;span class="text-sm text-muted"&gt;김하늘 님&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+&lt;main class="mx-auto max-w-5xl px-4 pb-12 pt-8 lg:grid lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-8"&gt;
+
+  &lt;!-- 데스크톱: 왼쪽 고정 프로필 / 모바일: 위쪽 --&gt;
+  &lt;aside class="min-w-0 lg:sticky lg:top-6 lg:self-start"&gt;
+    &lt;h1 class="text-2xl font-bold leading-snug"&gt;김하늘 님의&lt;br&gt;상담 기록&lt;/h1&gt;
+    &lt;p class="mt-2 text-sm text-muted tabular-nums"&gt;생년월일 1999.03.14&lt;/p&gt;
+    &lt;p class="mt-6 rounded-lg bg-brand-soft px-4 py-3 text-sm leading-relaxed text-brand"&gt;상담사 선생님이 확인한 내용만 이곳에 보여요. 과제 체크와 메모는 하늘 님만 볼 수 있어요.&lt;/p&gt;
+  &lt;/aside&gt;
+
+  &lt;div class="mt-8 min-w-0 lg:mt-0"&gt;
+    &lt;section&gt;
+      &lt;h2 class="text-base font-semibold"&gt;공유된 회기 &lt;span class="font-normal text-muted"&gt;2개&lt;/span&gt;&lt;/h2&gt;
+      &lt;ul class="mt-3 grid gap-3 md:grid-cols-2"&gt;
+        &lt;li&gt;
+          &lt;a href="client-session.html" class="flex h-full flex-col rounded-xl border border-line bg-surface p-5 hover:border-brand/50"&gt;
+            &lt;div class="flex items-center justify-between"&gt;
+              &lt;span class="text-lg font-semibold"&gt;2회기&lt;/span&gt;
+              &lt;span class="text-sm text-muted tabular-nums"&gt;2026.10.20&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;p class="mt-2 line-clamp-2 flex-1 text-[15px] leading-relaxed text-muted"&gt;지원서를 쓰려고 할 때마다 미루게 되는 마음에 대해 이야기를 나눴어요.&lt;/p&gt;
+            &lt;div class="mt-4 flex items-center gap-3"&gt;
+              &lt;div class="h-1.5 flex-1 overflow-hidden rounded-full bg-canvas"&gt;&lt;div class="h-full w-1/2 rounded-full bg-brand"&gt;&lt;/div&gt;&lt;/div&gt;
+              &lt;span class="text-xs text-muted tabular-nums"&gt;과제 2개 중 1개 완료&lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;a href="client-session.html" class="flex h-full flex-col rounded-xl border border-line bg-surface p-5 hover:border-brand/50"&gt;
+            &lt;div class="flex items-center justify-between"&gt;
+              &lt;span class="text-lg font-semibold"&gt;1회기&lt;/span&gt;
+              &lt;span class="text-sm text-muted tabular-nums"&gt;2026.10.13&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;p class="mt-2 line-clamp-2 flex-1 text-[15px] leading-relaxed text-muted"&gt;졸업을 앞두고 혼자 멈춰 있는 것 같은 마음에 대해 이야기를 나눴어요.&lt;/p&gt;
+            &lt;div class="mt-4 flex items-center gap-3"&gt;
+              &lt;div class="h-1.5 flex-1 overflow-hidden rounded-full bg-canvas"&gt;&lt;div class="h-full w-full rounded-full bg-brand"&gt;&lt;/div&gt;&lt;/div&gt;
+              &lt;span class="text-xs text-muted tabular-nums"&gt;과제 1개 중 1개 완료&lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/a&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/section&gt;
+
+    &lt;!-- 빈 상태 예시: 공유된 회기가 없을 때 --&gt;
+    &lt;section class="mt-8 rounded-xl border border-dashed border-line bg-surface px-5 py-8 text-center"&gt;
+      &lt;p class="text-xs font-medium text-muted"&gt;빈 상태 예시&lt;/p&gt;
+      &lt;p class="mt-2 text-[15px] font-medium"&gt;아직 공유된 상담 기록이 없어요&lt;/p&gt;
+      &lt;p class="mt-1 text-sm text-muted"&gt;상담사 선생님이 기록을 공유하면 여기에 표시돼요.&lt;/p&gt;
+    &lt;/section&gt;
+  &lt;/div&gt;
+&lt;/main&gt;
+&lt;script&gt;
+(function () {
+  if (window.parent === window) return;
+  function go(href) { window.parent.postMessage({ goto: href.split('?')[0].split('#')[0] }, '*'); }
+  document.addEventListener('click', function (e) { var a = e.target.closest('a[href$=".html"]'); if (a) { e.preventDefault(); go(a.getAttribute('href')); } });
+  document.addEventListener('submit', function (e) { var f = e.target; var act = f.getAttribute('action'); if (act &amp;&amp; /\.html$/.test(act)) { e.preventDefault(); go(act); } });
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</template>
+<template data-screen="client-invalid">&lt;!doctype html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;E-오류. 유효하지 않은 공유 링크&lt;/title&gt;
+&lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap"&gt;
+&lt;script src="https://cdn.tailwindcss.com/3.4.17"&gt;&lt;/script&gt;
+&lt;script&gt;
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['"IBM Plex Sans KR"', '"Apple SD Gothic Neo"', '"Malgun Gothic"', 'sans-serif'] },
+  colors: {
+    canvas: '#F5F7F6', surface: '#FFFFFF', ink: '#1E2925', muted: '#5B6862', line: '#DFE5E2',
+    brand: { DEFAULT: '#2E6A5C', hover: '#25574B', soft: '#E7F1EE' },
+    draft: { DEFAULT: '#9A5B0B', soft: '#FDF3E1' },
+    danger: { DEFAULT: '#B4321F', soft: '#FCEBE8' }
+  } } } };
+&lt;/script&gt;
+&lt;style&gt;[hidden] { display: none !important; }&lt;/style&gt;
+&lt;/head&gt;
+&lt;body class="min-h-screen bg-canvas font-sans text-ink antialiased"&gt;
+&lt;main class="flex min-h-screen items-center justify-center px-4 py-12"&gt;
+  &lt;div class="w-full max-w-md rounded-xl border border-line bg-surface px-6 py-10 text-center"&gt;
+    &lt;p class="text-sm font-semibold text-brand"&gt;회기노트&lt;/p&gt;
+    &lt;h1 class="mt-4 text-xl font-bold"&gt;열 수 없는 링크예요&lt;/h1&gt;
+    &lt;p class="mt-3 text-[15px] leading-relaxed text-muted"&gt;링크가 잘못되었거나 더 이상 사용할 수 없습니다.&lt;br&gt;상담사 선생님께 새 링크를 요청해 주세요.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/main&gt;
+&lt;script&gt;
+(function () {
+  if (window.parent === window) return;
+  function go(href) { window.parent.postMessage({ goto: href.split('?')[0].split('#')[0] }, '*'); }
+  document.addEventListener('click', function (e) { var a = e.target.closest('a[href$=".html"]'); if (a) { e.preventDefault(); go(a.getAttribute('href')); } });
+  document.addEventListener('submit', function (e) { var f = e.target; var act = f.getAttribute('action'); if (act &amp;&amp; /\.html$/.test(act)) { e.preventDefault(); go(act); } });
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</template>
+<template data-screen="client-session">&lt;!doctype html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;F. 내담자 회기 상세 (/client/[token]/sessions/[sessionId]) · 반응형&lt;/title&gt;
+&lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap"&gt;
+&lt;script src="https://cdn.tailwindcss.com/3.4.17"&gt;&lt;/script&gt;
+&lt;script&gt;
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['"IBM Plex Sans KR"', '"Apple SD Gothic Neo"', '"Malgun Gothic"', 'sans-serif'] },
+  colors: {
+    canvas: '#F5F7F6', surface: '#FFFFFF', ink: '#1E2925', muted: '#5B6862', line: '#DFE5E2',
+    brand: { DEFAULT: '#2E6A5C', hover: '#25574B', soft: '#E7F1EE' },
+    draft: { DEFAULT: '#9A5B0B', soft: '#FDF3E1' },
+    danger: { DEFAULT: '#B4321F', soft: '#FCEBE8' }
+  } } } };
+&lt;/script&gt;
+&lt;style&gt;[hidden] { display: none !important; }&lt;/style&gt;
+&lt;/head&gt;
+&lt;body class="min-h-screen bg-canvas font-sans text-ink antialiased"&gt;
+&lt;header class="border-b border-line bg-surface"&gt;
+  &lt;div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-4"&gt;
+    &lt;p class="text-sm font-semibold text-brand"&gt;회기노트&lt;/p&gt;
+    &lt;span class="text-sm text-muted"&gt;김하늘 님&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+&lt;main class="mx-auto max-w-5xl px-4 pb-12 pt-4"&gt;
+
+  &lt;a href="client-home.html" class="inline-flex h-10 items-center gap-1 rounded-md px-2 text-sm text-muted hover:bg-surface hover:text-ink"&gt;‹ 내 상담 기록&lt;/a&gt;
+
+  &lt;div class="mt-3"&gt;
+    &lt;p class="text-sm text-muted tabular-nums"&gt;2026.10.20&lt;/p&gt;
+    &lt;h1 class="mt-1 text-2xl font-bold"&gt;2회기 상담&lt;/h1&gt;
+  &lt;/div&gt;
+
+  &lt;!-- 모바일: 한 줄로 쌓임 / 데스크톱(lg): 왼쪽 요약·과제, 오른쪽 질문 메모 --&gt;
+  &lt;div class="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-start lg:gap-6"&gt;
+    &lt;div class="min-w-0 space-y-4"&gt;
+      &lt;section class="rounded-xl border border-line bg-surface p-5 lg:p-6"&gt;
+        &lt;h2 class="text-sm font-semibold text-brand"&gt;이번 상담 요약&lt;/h2&gt;
+        &lt;p class="mt-3 text-[16px] leading-[1.8]"&gt;이번 상담에서는 지원서를 쓰려고 할 때마다 미루게 되는 마음에 대해 이야기를 나눴어요. 선택을 잘못하면 돌이킬 수 없을 것 같다는 걱정이 크게 느껴진다고 말씀해 주셨어요. 부모님의 기대와 하늘 님의 마음 사이에서 고민하고 계신다는 점도 함께 살펴봤어요. 다음 상담 전까지 관심 있는 직무를 가볍게 적어보고, 하루 30분은 쉬어가는 시간을 갖기로 했어요.&lt;/p&gt;
+      &lt;/section&gt;
+
+      &lt;section class="rounded-xl border border-line bg-surface p-5 lg:p-6"&gt;
+        &lt;div class="flex items-center justify-between"&gt;
+          &lt;h2 class="text-sm font-semibold text-brand"&gt;실천 과제&lt;/h2&gt;
+          &lt;span class="text-xs text-muted tabular-nums"&gt;2개 중 1개 완료&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;ul class="mt-3 space-y-2"&gt;
+          &lt;li&gt;
+            &lt;label for="task-1" class="flex cursor-pointer items-start gap-3 rounded-lg border border-line p-3.5 has-[:checked]:border-brand/40 has-[:checked]:bg-brand-soft"&gt;
+              &lt;input id="task-1" type="checkbox" checked class="mt-0.5 h-5 w-5 shrink-0 rounded border-line accent-brand"&gt;
+              &lt;span class="text-[15px] leading-relaxed"&gt;관심 있는 직무 3가지를 적고, 끌리는 이유를 한 줄씩 쓰기&lt;/span&gt;
+            &lt;/label&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;label for="task-2" class="flex cursor-pointer items-start gap-3 rounded-lg border border-line p-3.5 has-[:checked]:border-brand/40 has-[:checked]:bg-brand-soft"&gt;
+              &lt;input id="task-2" type="checkbox" class="mt-0.5 h-5 w-5 shrink-0 rounded border-line accent-brand"&gt;
+              &lt;span class="text-[15px] leading-relaxed"&gt;하루 30분, 지원서와 상관없이 산책하기&lt;/span&gt;
+            &lt;/label&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p class="mt-3 text-xs text-muted"&gt;체크하면 바로 저장돼요.&lt;/p&gt;
+      &lt;/section&gt;
+    &lt;/div&gt;
+
+    &lt;section class="min-w-0 rounded-xl border border-line bg-surface p-5 lg:sticky lg:top-6 lg:p-6"&gt;
+      &lt;h2 class="text-sm font-semibold text-brand"&gt;다음 상담 전에 생각해 볼 질문&lt;/h2&gt;
+      &lt;p class="mt-1 text-xs text-muted"&gt;적어둔 메모는 하늘 님만 볼 수 있어요.&lt;/p&gt;
+      &lt;form class="mt-4 space-y-5" onsubmit="event.preventDefault()"&gt;
+        &lt;div class="space-y-2"&gt;
+          &lt;label for="q-1" class="block text-[15px] font-medium leading-relaxed"&gt;1. 선택을 미루고 싶어질 때, 그 순간 가장 걱정되는 것은 무엇인가요?&lt;/label&gt;
+          &lt;textarea id="q-1" rows="3" placeholder="떠오르는 대로 적어보세요" class="w-full rounded-lg border border-line px-3 py-2.5 text-[15px] leading-relaxed focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;다른 길을 갔으면 더 잘됐을 거라는 후회가 생길까 봐.&lt;/textarea&gt;
+        &lt;/div&gt;
+        &lt;div class="space-y-2"&gt;
+          &lt;label for="q-2" class="block text-[15px] font-medium leading-relaxed"&gt;2. 부모님의 기대와 내 마음이 겹치는 부분이 있다면 어디일까요?&lt;/label&gt;
+          &lt;textarea id="q-2" rows="3" placeholder="떠오르는 대로 적어보세요" class="w-full rounded-lg border border-line px-3 py-2.5 text-[15px] leading-relaxed focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;&lt;/textarea&gt;
+        &lt;/div&gt;
+        &lt;button type="submit" class="inline-flex h-12 w-full items-center justify-center rounded-lg bg-brand text-[15px] font-medium text-white hover:bg-brand-hover lg:h-11"&gt;메모 저장&lt;/button&gt;
+        &lt;p role="status" class="text-center text-sm text-brand"&gt;메모를 저장했어요.&lt;/p&gt;
+      &lt;/form&gt;
+    &lt;/section&gt;
+  &lt;/div&gt;
+
+  &lt;!-- 이전/다음 회기 --&gt;
+  &lt;nav class="mt-6 grid grid-cols-2 gap-3 lg:flex lg:justify-between" aria-label="회기 이동"&gt;
+    &lt;a href="client-session.html" class="inline-flex h-12 items-center justify-center rounded-lg border border-line bg-surface px-6 text-sm font-medium hover:border-brand/50 lg:h-11"&gt;‹ 1회기&lt;/a&gt;
+    &lt;span aria-disabled="true" class="inline-flex h-12 items-center justify-center rounded-lg border border-line bg-surface px-6 text-sm text-muted/50 lg:h-11"&gt;다음 회기 없음&lt;/span&gt;
+  &lt;/nav&gt;
+&lt;/main&gt;
+&lt;script&gt;
+(function () {
+  if (window.parent === window) return;
+  function go(href) { window.parent.postMessage({ goto: href.split('?')[0].split('#')[0] }, '*'); }
+  document.addEventListener('click', function (e) { var a = e.target.closest('a[href$=".html"]'); if (a) { e.preventDefault(); go(a.getAttribute('href')); } });
+  document.addEventListener('submit', function (e) { var f = e.target; var act = f.getAttribute('action'); if (act &amp;&amp; /\.html$/.test(act)) { e.preventDefault(); go(act); } });
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</template>
+<template data-screen="dashboard">&lt;!doctype html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;C. 상담사 대시보드 (/counselor)&lt;/title&gt;
+&lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap"&gt;
+&lt;script src="https://cdn.tailwindcss.com/3.4.17"&gt;&lt;/script&gt;
+&lt;script&gt;
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['"IBM Plex Sans KR"', '"Apple SD Gothic Neo"', '"Malgun Gothic"', 'sans-serif'] },
+  colors: {
+    canvas: '#F5F7F6', surface: '#FFFFFF', ink: '#1E2925', muted: '#5B6862', line: '#DFE5E2',
+    brand: { DEFAULT: '#2E6A5C', hover: '#25574B', soft: '#E7F1EE' },
+    draft: { DEFAULT: '#9A5B0B', soft: '#FDF3E1' },
+    danger: { DEFAULT: '#B4321F', soft: '#FCEBE8' }
+  } } } };
+&lt;/script&gt;
+&lt;style&gt;[hidden] { display: none !important; }&lt;/style&gt;
+&lt;/head&gt;
+&lt;body class="min-h-screen bg-canvas font-sans text-ink antialiased"&gt;
+
+&lt;!-- 상단 바 --&gt;
+&lt;header class="border-b border-line bg-surface"&gt;
+  &lt;div class="mx-auto flex h-14 max-w-6xl items-center justify-between px-4"&gt;
+    &lt;p class="text-sm font-semibold text-brand"&gt;회기노트&lt;/p&gt;
+    &lt;div class="flex items-center gap-3 text-sm"&gt;
+      &lt;span class="text-muted"&gt;counselor01 님&lt;/span&gt;
+      &lt;a href="login.html" class="inline-flex h-8 items-center rounded-md px-3 text-muted hover:bg-canvas hover:text-ink"&gt;로그아웃&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+
+&lt;main class="mx-auto grid max-w-6xl gap-6 px-4 py-6 md:grid-cols-[280px_1fr]"&gt;
+
+  &lt;!-- 좌측: 내담자 목록 --&gt;
+  &lt;aside class="min-w-0 rounded-xl border border-line bg-surface"&gt;
+    &lt;div class="flex items-center justify-between border-b border-line px-4 py-3"&gt;
+      &lt;h2 class="text-sm font-semibold"&gt;내담자 &lt;span class="font-normal text-muted"&gt;3명&lt;/span&gt;&lt;/h2&gt;
+      &lt;button data-open="modal-add" class="inline-flex h-8 items-center gap-1 rounded-md bg-brand px-3 text-xs font-medium text-white hover:bg-brand-hover"&gt;+ 내담자 추가&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;ul class="p-2"&gt;
+      &lt;li&gt;
+        &lt;button class="flex w-full items-center justify-between rounded-md bg-brand-soft px-3 py-2.5 text-left" aria-current="true"&gt;
+          &lt;span&gt;
+            &lt;span class="block text-sm font-semibold text-brand"&gt;김하늘&lt;/span&gt;
+            &lt;span class="block text-xs text-muted"&gt;1999.03.14&lt;/span&gt;
+          &lt;/span&gt;
+          &lt;span class="text-xs text-muted"&gt;회기 3&lt;/span&gt;
+        &lt;/button&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;button class="flex w-full items-center justify-between rounded-md px-3 py-2.5 text-left hover:bg-canvas"&gt;
+          &lt;span&gt;
+            &lt;span class="block text-sm font-medium"&gt;이도윤&lt;/span&gt;
+            &lt;span class="block text-xs text-muted"&gt;2001.08.02&lt;/span&gt;
+          &lt;/span&gt;
+          &lt;span class="text-xs text-muted"&gt;회기 1&lt;/span&gt;
+        &lt;/button&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;button class="flex w-full items-center justify-between rounded-md px-3 py-2.5 text-left hover:bg-canvas"&gt;
+          &lt;span&gt;
+            &lt;span class="block text-sm font-medium"&gt;박서연&lt;/span&gt;
+            &lt;span class="block text-xs text-muted"&gt;1997.11.25&lt;/span&gt;
+          &lt;/span&gt;
+          &lt;span class="text-xs text-muted"&gt;회기 0&lt;/span&gt;
+        &lt;/button&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/aside&gt;
+
+  &lt;!-- 우측: 선택한 내담자 --&gt;
+  &lt;section class="min-w-0 space-y-6"&gt;
+    &lt;div class="rounded-xl border border-line bg-surface p-5"&gt;
+      &lt;div class="flex flex-wrap items-start justify-between gap-3"&gt;
+        &lt;div&gt;
+          &lt;h1 class="text-xl font-bold"&gt;김하늘&lt;/h1&gt;
+          &lt;p class="mt-1 text-sm text-muted"&gt;생년월일 1999.03.14&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;button data-open="modal-delete" class="inline-flex h-8 items-center rounded-md border border-line px-3 text-xs font-medium text-danger hover:bg-danger-soft"&gt;내담자 삭제&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class="mt-4 rounded-md bg-canvas px-4 py-3"&gt;
+        &lt;p class="text-xs font-medium text-muted"&gt;상담 목적 메모 · 상담사만 볼 수 있음&lt;/p&gt;
+        &lt;p class="mt-1 text-sm leading-relaxed"&gt;졸업을 앞두고 진로 결정에 대한 불안이 큼. 부모님 기대와 본인 희망 사이의 갈등을 다루고자 함.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="rounded-xl border border-line bg-surface"&gt;
+      &lt;div class="flex items-center justify-between border-b border-line px-5 py-3"&gt;
+        &lt;h2 class="text-sm font-semibold"&gt;회기 목록&lt;/h2&gt;
+        &lt;a href="session-draft.html" class="inline-flex h-9 items-center gap-1 rounded-md bg-brand px-4 text-sm font-medium text-white hover:bg-brand-hover"&gt;+ 새 회기 생성&lt;/a&gt;
+      &lt;/div&gt;
+      &lt;ul class="divide-y divide-line"&gt;
+        &lt;li&gt;
+          &lt;a href="session-draft.html" class="flex items-center gap-4 px-5 py-3.5 hover:bg-canvas"&gt;
+            &lt;span class="w-14 text-sm font-semibold tabular-nums"&gt;3회기&lt;/span&gt;
+            &lt;span class="flex-1 text-sm text-muted tabular-nums"&gt;2026.10.27&lt;/span&gt;
+            &lt;span class="rounded-full bg-draft-soft px-2.5 py-0.5 text-xs font-medium text-draft"&gt;작성 중&lt;/span&gt;
+            &lt;span class="text-muted" aria-hidden="true"&gt;›&lt;/span&gt;
+          &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;a href="session-draft.html" class="flex items-center gap-4 px-5 py-3.5 hover:bg-canvas"&gt;
+            &lt;span class="w-14 text-sm font-semibold tabular-nums"&gt;2회기&lt;/span&gt;
+            &lt;span class="flex-1 text-sm text-muted tabular-nums"&gt;2026.10.20&lt;/span&gt;
+            &lt;span class="rounded-full bg-draft-soft px-2.5 py-0.5 text-xs font-medium text-draft"&gt;작성 중&lt;/span&gt;
+            &lt;span class="text-muted" aria-hidden="true"&gt;›&lt;/span&gt;
+          &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;a href="session-shared.html" class="flex items-center gap-4 px-5 py-3.5 hover:bg-canvas"&gt;
+            &lt;span class="w-14 text-sm font-semibold tabular-nums"&gt;1회기&lt;/span&gt;
+            &lt;span class="flex-1 text-sm text-muted tabular-nums"&gt;2026.10.13&lt;/span&gt;
+            &lt;span class="rounded-full bg-brand-soft px-2.5 py-0.5 text-xs font-medium text-brand"&gt;공유 완료&lt;/span&gt;
+            &lt;span class="text-muted" aria-hidden="true"&gt;›&lt;/span&gt;
+          &lt;/a&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 빈 상태 예시: 회기가 하나도 없는 내담자(박서연)를 선택했을 때 --&gt;
+    &lt;div class="rounded-xl border border-dashed border-line bg-surface px-5 py-10 text-center"&gt;
+      &lt;p class="text-xs font-medium text-muted"&gt;빈 상태 예시&lt;/p&gt;
+      &lt;p class="mt-2 text-sm font-medium"&gt;아직 기록된 회기가 없습니다&lt;/p&gt;
+      &lt;p class="mt-1 text-sm text-muted"&gt;첫 상담을 마쳤다면 새 회기를 만들어 기록을 시작하세요.&lt;/p&gt;
+      &lt;button class="mt-4 inline-flex h-9 items-center rounded-md bg-brand px-4 text-sm font-medium text-white hover:bg-brand-hover"&gt;+ 새 회기 생성&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+
+&lt;!-- 모달: 내담자 추가 --&gt;
+&lt;div id="modal-add" hidden class="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 px-4"&gt;
+  &lt;div role="dialog" aria-modal="true" aria-labelledby="add-title" class="w-full max-w-md rounded-xl bg-surface p-6 shadow-xl"&gt;
+    &lt;h2 id="add-title" class="text-lg font-semibold"&gt;내담자 추가&lt;/h2&gt;
+    &lt;p class="mt-1 text-sm text-muted"&gt;시연용 합성 정보만 입력하세요.&lt;/p&gt;
+    &lt;form class="mt-5 space-y-4" onsubmit="event.preventDefault()"&gt;
+      &lt;div class="space-y-1.5"&gt;
+        &lt;label for="c-name" class="text-sm font-medium"&gt;이름&lt;/label&gt;
+        &lt;input id="c-name" type="text" placeholder="예: 김하늘" class="h-10 w-full rounded-md border border-line px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;
+      &lt;/div&gt;
+      &lt;div class="space-y-1.5"&gt;
+        &lt;label for="c-birth" class="text-sm font-medium"&gt;생년월일&lt;/label&gt;
+        &lt;input id="c-birth" type="date" class="h-10 w-full rounded-md border border-line px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;
+      &lt;/div&gt;
+      &lt;div class="space-y-1.5"&gt;
+        &lt;label for="c-purpose" class="text-sm font-medium"&gt;상담 목적 메모 &lt;span class="font-normal text-muted"&gt;(선택 · 내담자에게 보이지 않음)&lt;/span&gt;&lt;/label&gt;
+        &lt;textarea id="c-purpose" rows="3" class="w-full rounded-md border border-line px-3 py-2 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;&lt;/textarea&gt;
+      &lt;/div&gt;
+      &lt;div class="flex justify-end gap-2 pt-2"&gt;
+        &lt;button type="button" data-close class="inline-flex h-10 items-center rounded-md border border-line px-4 text-sm font-medium hover:bg-canvas"&gt;취소&lt;/button&gt;
+        &lt;button type="submit" class="inline-flex h-10 items-center rounded-md bg-brand px-4 text-sm font-medium text-white hover:bg-brand-hover"&gt;추가&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 모달: 내담자 삭제 확인 --&gt;
+&lt;div id="modal-delete" hidden class="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 px-4"&gt;
+  &lt;div role="alertdialog" aria-modal="true" aria-labelledby="del-title" class="w-full max-w-md rounded-xl bg-surface p-6 shadow-xl"&gt;
+    &lt;h2 id="del-title" class="text-lg font-semibold"&gt;김하늘 님을 삭제할까요?&lt;/h2&gt;
+    &lt;p class="mt-2 text-sm leading-relaxed text-muted"&gt;모든 회기 기록, 실천 과제, 준비 질문이 함께 삭제되고 내담자 공유 링크도 더 이상 열리지 않습니다. 되돌릴 수 없습니다.&lt;/p&gt;
+    &lt;div class="mt-6 flex justify-end gap-2"&gt;
+      &lt;button type="button" data-close class="inline-flex h-10 items-center rounded-md border border-line px-4 text-sm font-medium hover:bg-canvas"&gt;취소&lt;/button&gt;
+      &lt;button type="button" class="inline-flex h-10 items-center rounded-md bg-danger px-4 text-sm font-medium text-white hover:opacity-90"&gt;삭제&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+// 미리보기용 모달 토글 (실제 구현은 shadcn/ui Dialog, AlertDialog 사용)
+document.querySelectorAll('[data-open]').forEach(b =&gt; b.addEventListener('click', () =&gt; { document.getElementById(b.dataset.open).hidden = false; }));
+document.querySelectorAll('[data-close]').forEach(b =&gt; b.addEventListener('click', () =&gt; { b.closest('[id^="modal-"]').hidden = true; }));
+document.querySelectorAll('[id^="modal-"]').forEach(m =&gt; m.addEventListener('click', e =&gt; { if (e.target === m) m.hidden = true; }));
+document.addEventListener('keydown', e =&gt; { if (e.key === 'Escape') document.querySelectorAll('[id^="modal-"]').forEach(m =&gt; m.hidden = true); });
+&lt;/script&gt;
+&lt;script&gt;
+(function () {
+  if (window.parent === window) return;
+  function go(href) { window.parent.postMessage({ goto: href.split('?')[0].split('#')[0] }, '*'); }
+  document.addEventListener('click', function (e) { var a = e.target.closest('a[href$=".html"]'); if (a) { e.preventDefault(); go(a.getAttribute('href')); } });
+  document.addEventListener('submit', function (e) { var f = e.target; var act = f.getAttribute('action'); if (act &amp;&amp; /\.html$/.test(act)) { e.preventDefault(); go(act); } });
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</template>
+<template data-screen="login">&lt;!doctype html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;A. 상담사 로그인 (/login)&lt;/title&gt;
+&lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap"&gt;
+&lt;script src="https://cdn.tailwindcss.com/3.4.17"&gt;&lt;/script&gt;
+&lt;script&gt;
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['"IBM Plex Sans KR"', '"Apple SD Gothic Neo"', '"Malgun Gothic"', 'sans-serif'] },
+  colors: {
+    canvas: '#F5F7F6', surface: '#FFFFFF', ink: '#1E2925', muted: '#5B6862', line: '#DFE5E2',
+    brand: { DEFAULT: '#2E6A5C', hover: '#25574B', soft: '#E7F1EE' },
+    draft: { DEFAULT: '#9A5B0B', soft: '#FDF3E1' },
+    danger: { DEFAULT: '#B4321F', soft: '#FCEBE8' }
+  } } } };
+&lt;/script&gt;
+&lt;style&gt;[hidden] { display: none !important; }&lt;/style&gt;
+&lt;/head&gt;
+&lt;body class="min-h-screen bg-canvas font-sans text-ink antialiased"&gt;
+&lt;main class="flex min-h-screen items-center justify-center px-4 py-12"&gt;
+  &lt;div class="w-full max-w-sm"&gt;
+    &lt;div class="mb-8 text-center"&gt;
+      &lt;p class="text-sm font-semibold tracking-wide text-brand"&gt;회기노트&lt;/p&gt;
+      &lt;h1 class="mt-2 text-2xl font-bold"&gt;상담사 로그인&lt;/h1&gt;
+      &lt;p class="mt-2 text-sm text-muted"&gt;회기 기록을 정리하고 내담자에게 공유하세요.&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;form action="dashboard.html" class="space-y-4 rounded-xl border border-line bg-surface p-6 shadow-sm"&gt;
+      &lt;div class="space-y-1.5"&gt;
+        &lt;label for="username" class="text-sm font-medium"&gt;아이디&lt;/label&gt;
+        &lt;input id="username" type="text" autocomplete="username" value="counselor01"
+          class="h-10 w-full rounded-md border border-line bg-surface px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;
+      &lt;/div&gt;
+      &lt;div class="space-y-1.5"&gt;
+        &lt;label for="password" class="text-sm font-medium"&gt;비밀번호&lt;/label&gt;
+        &lt;input id="password" type="password" autocomplete="current-password" value="password"
+          class="h-10 w-full rounded-md border border-danger bg-surface px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;
+      &lt;/div&gt;
+
+      &lt;!-- 로그인 실패 시에만 표시 --&gt;
+      &lt;p role="alert" class="rounded-md bg-danger-soft px-3 py-2 text-sm text-danger"&gt;아이디 또는 비밀번호가 올바르지 않습니다.&lt;/p&gt;
+
+      &lt;button type="submit" class="inline-flex h-10 w-full items-center justify-center rounded-md bg-brand text-sm font-medium text-white hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"&gt;로그인&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;p class="mt-6 text-center text-sm text-muted"&gt;
+      계정이 없으신가요? &lt;a href="signup.html" class="font-medium text-brand underline-offset-4 hover:underline"&gt;회원가입&lt;/a&gt;
+    &lt;/p&gt;
+    &lt;p class="mt-10 text-center text-xs text-muted"&gt;시연용 데모입니다. 실제 상담 정보를 입력하지 마세요.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/main&gt;
+&lt;script&gt;
+(function () {
+  if (window.parent === window) return;
+  function go(href) { window.parent.postMessage({ goto: href.split('?')[0].split('#')[0] }, '*'); }
+  document.addEventListener('click', function (e) { var a = e.target.closest('a[href$=".html"]'); if (a) { e.preventDefault(); go(a.getAttribute('href')); } });
+  document.addEventListener('submit', function (e) { var f = e.target; var act = f.getAttribute('action'); if (act &amp;&amp; /\.html$/.test(act)) { e.preventDefault(); go(act); } });
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</template>
+<template data-screen="session-draft">&lt;!doctype html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;D-1. 상담사 회기 페이지 · 작성 중 (/counselor/clients/[clientId]/sessions/[sessionId])&lt;/title&gt;
+&lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap"&gt;
+&lt;script src="https://cdn.tailwindcss.com/3.4.17"&gt;&lt;/script&gt;
+&lt;script&gt;
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['"IBM Plex Sans KR"', '"Apple SD Gothic Neo"', '"Malgun Gothic"', 'sans-serif'] },
+  colors: {
+    canvas: '#F5F7F6', surface: '#FFFFFF', ink: '#1E2925', muted: '#5B6862', line: '#DFE5E2',
+    brand: { DEFAULT: '#2E6A5C', hover: '#25574B', soft: '#E7F1EE' },
+    draft: { DEFAULT: '#9A5B0B', soft: '#FDF3E1' },
+    danger: { DEFAULT: '#B4321F', soft: '#FCEBE8' }
+  } } } };
+&lt;/script&gt;
+&lt;style&gt;[hidden] { display: none !important; }&lt;/style&gt;
+&lt;/head&gt;
+&lt;body class="min-h-screen bg-canvas pb-36 sm:pb-28 font-sans text-ink antialiased"&gt;
+
+&lt;header class="border-b border-line bg-surface"&gt;
+  &lt;div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-4"&gt;
+    &lt;a href="dashboard.html" class="inline-flex h-8 items-center gap-1 rounded-md px-2 text-sm text-muted hover:bg-canvas hover:text-ink"&gt;‹ 대시보드로 돌아가기&lt;/a&gt;
+    &lt;p class="text-sm font-semibold text-brand"&gt;회기노트&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+
+&lt;main class="mx-auto max-w-5xl space-y-6 px-4 py-6"&gt;
+
+  &lt;!-- 회기 정보 --&gt;
+  &lt;div class="flex flex-wrap items-end justify-between gap-4"&gt;
+    &lt;div&gt;
+      &lt;p class="text-sm text-muted"&gt;김하늘&lt;/p&gt;
+      &lt;div class="mt-1 flex items-center gap-3"&gt;
+        &lt;h1 class="text-2xl font-bold"&gt;2회기&lt;/h1&gt;
+        &lt;span class="rounded-full bg-draft-soft px-2.5 py-0.5 text-xs font-medium text-draft"&gt;작성 중&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="space-y-1"&gt;
+      &lt;label for="session-date" class="block text-xs font-medium text-muted"&gt;상담 날짜&lt;/label&gt;
+      &lt;input id="session-date" type="date" value="2026-10-20" class="h-9 rounded-md border border-line bg-surface px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- 상담 원문 --&gt;
+  &lt;section class="rounded-xl border border-line bg-surface p-5"&gt;
+    &lt;div class="flex flex-wrap items-center justify-between gap-2"&gt;
+      &lt;div class="flex items-center gap-2"&gt;
+        &lt;h2 class="text-base font-semibold"&gt;상담 원문&lt;/h2&gt;
+        &lt;span class="rounded bg-canvas px-1.5 py-0.5 text-[11px] font-medium text-muted"&gt;상담사만&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;span class="text-xs text-muted tabular-nums"&gt;412자&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;label for="source-text" class="sr-only"&gt;상담 원문&lt;/label&gt;
+    &lt;textarea id="source-text" rows="9" class="mt-3 w-full rounded-md border border-line px-3 py-2.5 text-sm leading-relaxed focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;상담사: 지난 한 주 어떻게 지내셨어요?
+내담자: 지원서를 쓰려고 했는데 막상 앉으면 뭘 써야 할지 몰라서 계속 미뤘어요. 부모님은 공기업을 원하시는데, 저는 아직 확신이 없어요.
+상담사: 미루게 될 때 어떤 생각이 드세요?
+내담자: 잘못 고르면 돌이킬 수 없을 것 같다는 생각이요.
+상담사: 이번 주에는 관심 있는 직무 세 가지를 적어보고, 각각 끌리는 이유를 한 줄씩 써보면 어떨까요?
+내담자: 네, 해볼게요. 그리고 하루 30분은 지원서랑 상관없이 산책하는 시간을 가져볼게요.&lt;/textarea&gt;
+
+    &lt;div class="mt-3 flex flex-wrap items-center gap-3"&gt;
+      &lt;button data-open="modal-regenerate" class="inline-flex h-10 items-center gap-2 rounded-md bg-ink px-4 text-sm font-medium text-white hover:opacity-90"&gt;✦ AI로 다시 정리하기&lt;/button&gt;
+      &lt;!-- 생성 중 상태 예시 --&gt;
+      &lt;button disabled class="inline-flex h-10 cursor-not-allowed items-center gap-2 rounded-md bg-ink/50 px-4 text-sm font-medium text-white"&gt;
+        &lt;span class="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white motion-reduce:animate-none" aria-hidden="true"&gt;&lt;/span&gt;정리하는 중…
+      &lt;/button&gt;
+      &lt;span class="text-xs text-muted"&gt;AI는 이 회기의 원문만 참고합니다.&lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 생성 실패 상태 예시 --&gt;
+    &lt;div role="alert" class="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-md bg-danger-soft px-3 py-2 text-sm text-danger"&gt;
+      &lt;span&gt;AI 정리에 실패했습니다. 입력한 원문과 현재 결과는 그대로 남아 있습니다.&lt;/span&gt;
+      &lt;button class="font-medium underline underline-offset-4"&gt;다시 시도&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;!-- AI 결과 --&gt;
+  &lt;section class="space-y-4"&gt;
+    &lt;div class="flex items-center justify-between"&gt;
+      &lt;h2 class="text-base font-semibold"&gt;AI 정리 결과 &lt;span class="font-normal text-muted"&gt;· 검토 후 수정하세요&lt;/span&gt;&lt;/h2&gt;
+    &lt;/div&gt;
+
+    &lt;div class="grid gap-4 lg:grid-cols-2"&gt;
+      &lt;div class="min-w-0 rounded-xl border border-line bg-surface p-5"&gt;
+        &lt;div class="flex items-center gap-2"&gt;
+          &lt;label for="counselor-note" class="text-sm font-semibold"&gt;상담사용 상세 기록&lt;/label&gt;
+          &lt;span class="rounded bg-canvas px-1.5 py-0.5 text-[11px] font-medium text-muted"&gt;상담사만&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;textarea id="counselor-note" rows="10" class="mt-3 w-full rounded-md border border-line px-3 py-2.5 text-sm leading-relaxed focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;[주제] 진로 결정 지연과 불안
+
+[주요 내용] 지원서 작성을 반복적으로 미룸. 부모의 기대(공기업)와 본인의 불확실성 사이에서 갈등을 표현함.
+
+[감정 표현] "잘못 고르면 돌이킬 수 없을 것 같다"는 두려움을 언급함.
+
+[합의 사항] 관심 직무 3가지와 이유 정리, 하루 30분 산책.&lt;/textarea&gt;
+      &lt;/div&gt;
+
+      &lt;div class="min-w-0 rounded-xl border border-brand/30 bg-surface p-5"&gt;
+        &lt;div class="flex items-center gap-2"&gt;
+          &lt;label for="client-summary" class="text-sm font-semibold"&gt;내담자용 요약&lt;/label&gt;
+          &lt;span class="rounded bg-brand-soft px-1.5 py-0.5 text-[11px] font-medium text-brand"&gt;내담자에게 공유&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;textarea id="client-summary" rows="10" class="mt-3 w-full rounded-md border border-line px-3 py-2.5 text-sm leading-relaxed focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;이번 상담에서는 지원서를 쓰려고 할 때마다 미루게 되는 마음에 대해 이야기를 나눴어요. 선택을 잘못하면 돌이킬 수 없을 것 같다는 걱정이 크게 느껴진다고 말씀해 주셨어요. 부모님의 기대와 하늘 님의 마음 사이에서 고민하고 계신다는 점도 함께 살펴봤어요. 다음 상담 전까지 관심 있는 직무를 가볍게 적어보고, 하루 30분은 쉬어가는 시간을 갖기로 했어요.&lt;/textarea&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="grid gap-4 lg:grid-cols-2"&gt;
+      &lt;!-- 실천 과제 --&gt;
+      &lt;div class="min-w-0 rounded-xl border border-brand/30 bg-surface p-5"&gt;
+        &lt;div class="flex items-center justify-between gap-2"&gt;
+          &lt;div class="flex items-center gap-2"&gt;
+            &lt;h3 class="text-sm font-semibold"&gt;실천 과제&lt;/h3&gt;
+            &lt;span class="rounded bg-brand-soft px-1.5 py-0.5 text-[11px] font-medium text-brand"&gt;내담자에게 공유&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;span class="text-xs text-muted"&gt;2개&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;ul class="mt-3 space-y-2"&gt;
+          &lt;li class="flex items-center gap-2"&gt;
+            &lt;label for="ai-1" class="sr-only"&gt;실천 과제 1&lt;/label&gt;
+            &lt;input id="ai-1" value="관심 있는 직무 3가지를 적고, 끌리는 이유를 한 줄씩 쓰기" class="h-10 min-w-0 flex-1 rounded-md border border-line px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;
+            &lt;button aria-label="실천 과제 1 삭제" class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-muted hover:bg-danger-soft hover:text-danger"&gt;✕&lt;/button&gt;
+          &lt;/li&gt;
+          &lt;li class="flex items-center gap-2"&gt;
+            &lt;label for="ai-2" class="sr-only"&gt;실천 과제 2&lt;/label&gt;
+            &lt;input id="ai-2" value="하루 30분, 지원서와 상관없이 산책하기" class="h-10 min-w-0 flex-1 rounded-md border border-line px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;
+            &lt;button aria-label="실천 과제 2 삭제" class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-muted hover:bg-danger-soft hover:text-danger"&gt;✕&lt;/button&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;button class="mt-3 inline-flex h-9 items-center rounded-md border border-dashed border-line px-3 text-sm text-muted hover:border-brand hover:text-brand"&gt;+ 과제 추가&lt;/button&gt;
+      &lt;/div&gt;
+
+      &lt;!-- 준비 질문 --&gt;
+      &lt;div class="min-w-0 rounded-xl border border-brand/30 bg-surface p-5"&gt;
+        &lt;div class="flex items-center justify-between gap-2"&gt;
+          &lt;div class="flex items-center gap-2"&gt;
+            &lt;h3 class="text-sm font-semibold"&gt;다음 상담 준비 질문&lt;/h3&gt;
+            &lt;span class="rounded bg-brand-soft px-1.5 py-0.5 text-[11px] font-medium text-brand"&gt;내담자에게 공유&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;span class="text-xs text-muted"&gt;2개&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;ul class="mt-3 space-y-2"&gt;
+          &lt;li class="flex items-center gap-2"&gt;
+            &lt;label for="pq-1" class="sr-only"&gt;준비 질문 1&lt;/label&gt;
+            &lt;input id="pq-1" value="선택을 미루고 싶어질 때, 그 순간 가장 걱정되는 것은 무엇인가요?" class="h-10 min-w-0 flex-1 rounded-md border border-line px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;
+            &lt;button aria-label="준비 질문 1 삭제" class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-muted hover:bg-danger-soft hover:text-danger"&gt;✕&lt;/button&gt;
+          &lt;/li&gt;
+          &lt;li class="flex items-center gap-2"&gt;
+            &lt;label for="pq-2" class="sr-only"&gt;준비 질문 2&lt;/label&gt;
+            &lt;input id="pq-2" value="부모님의 기대와 내 마음이 겹치는 부분이 있다면 어디일까요?" class="h-10 min-w-0 flex-1 rounded-md border border-line px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;
+            &lt;button aria-label="준비 질문 2 삭제" class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-muted hover:bg-danger-soft hover:text-danger"&gt;✕&lt;/button&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;button class="mt-3 inline-flex h-9 items-center rounded-md border border-dashed border-line px-3 text-sm text-muted hover:border-brand hover:text-brand"&gt;+ 질문 추가&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+
+&lt;!-- 하단 고정 액션 바 --&gt;
+&lt;div class="fixed inset-x-0 bottom-0 border-t border-line bg-surface/95 backdrop-blur"&gt;
+  &lt;div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3"&gt;
+    &lt;p class="flex items-center gap-2 text-sm text-draft"&gt;&lt;span class="h-2 w-2 rounded-full bg-draft" aria-hidden="true"&gt;&lt;/span&gt;저장하지 않은 변경 사항이 있습니다&lt;/p&gt;
+    &lt;div class="flex w-full gap-2 sm:w-auto"&gt;
+      &lt;button class="inline-flex h-11 flex-1 items-center justify-center rounded-md border border-line bg-surface px-4 text-sm font-medium hover:bg-canvas sm:h-10 sm:flex-none"&gt;임시 저장&lt;/button&gt;
+      &lt;button data-open="modal-share" class="inline-flex h-11 flex-1 items-center justify-center rounded-md bg-brand px-4 text-sm font-medium text-white hover:bg-brand-hover sm:h-10 sm:flex-none"&gt;공유 확정&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 모달: AI 재생성 확인 --&gt;
+&lt;div id="modal-regenerate" hidden class="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 px-4"&gt;
+  &lt;div role="alertdialog" aria-modal="true" aria-labelledby="regen-title" class="w-full max-w-md rounded-xl bg-surface p-6 shadow-xl"&gt;
+    &lt;h2 id="regen-title" class="text-lg font-semibold"&gt;AI로 다시 정리할까요?&lt;/h2&gt;
+    &lt;p class="mt-2 text-sm leading-relaxed text-muted"&gt;상담사용 기록, 내담자용 요약, 실천 과제, 준비 질문이 새 결과로 모두 바뀝니다. 직접 수정한 내용도 사라집니다.&lt;/p&gt;
+    &lt;div class="mt-6 flex justify-end gap-2"&gt;
+      &lt;button type="button" data-close class="inline-flex h-10 items-center rounded-md border border-line px-4 text-sm font-medium hover:bg-canvas"&gt;취소&lt;/button&gt;
+      &lt;button type="button" class="inline-flex h-10 items-center rounded-md bg-ink px-4 text-sm font-medium text-white hover:opacity-90"&gt;다시 정리하기&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 모달: 공유 확정 확인 --&gt;
+&lt;div id="modal-share" hidden class="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 px-4"&gt;
+  &lt;div role="alertdialog" aria-modal="true" aria-labelledby="share-title" class="w-full max-w-md rounded-xl bg-surface p-6 shadow-xl"&gt;
+    &lt;h2 id="share-title" class="text-lg font-semibold"&gt;2회기를 내담자에게 공유할까요?&lt;/h2&gt;
+    &lt;p class="mt-2 text-sm leading-relaxed text-muted"&gt;공유하면 이 회기의 기록은 더 이상 수정할 수 없습니다. 내담자는 아래 내용만 볼 수 있습니다.&lt;/p&gt;
+    &lt;ul class="mt-3 space-y-1 rounded-md bg-canvas px-4 py-3 text-sm"&gt;
+      &lt;li&gt;✓ 내담자용 요약&lt;/li&gt;
+      &lt;li&gt;✓ 실천 과제 2개&lt;/li&gt;
+      &lt;li&gt;✓ 다음 상담 준비 질문 2개&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div class="mt-6 flex justify-end gap-2"&gt;
+      &lt;button type="button" data-close class="inline-flex h-10 items-center rounded-md border border-line px-4 text-sm font-medium hover:bg-canvas"&gt;취소&lt;/button&gt;
+      &lt;a href="session-shared.html" class="inline-flex h-10 items-center rounded-md bg-brand px-4 text-sm font-medium text-white hover:bg-brand-hover"&gt;공유 확정&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+// 미리보기용 모달 토글 (실제 구현은 shadcn/ui AlertDialog 사용)
+document.querySelectorAll('[data-open]').forEach(b =&gt; b.addEventListener('click', () =&gt; { document.getElementById(b.dataset.open).hidden = false; }));
+document.querySelectorAll('[data-close]').forEach(b =&gt; b.addEventListener('click', () =&gt; { b.closest('[id^="modal-"]').hidden = true; }));
+document.querySelectorAll('[id^="modal-"]').forEach(m =&gt; m.addEventListener('click', e =&gt; { if (e.target === m) m.hidden = true; }));
+document.addEventListener('keydown', e =&gt; { if (e.key === 'Escape') document.querySelectorAll('[id^="modal-"]').forEach(m =&gt; m.hidden = true); });
+&lt;/script&gt;
+&lt;script&gt;
+(function () {
+  if (window.parent === window) return;
+  function go(href) { window.parent.postMessage({ goto: href.split('?')[0].split('#')[0] }, '*'); }
+  document.addEventListener('click', function (e) { var a = e.target.closest('a[href$=".html"]'); if (a) { e.preventDefault(); go(a.getAttribute('href')); } });
+  document.addEventListener('submit', function (e) { var f = e.target; var act = f.getAttribute('action'); if (act &amp;&amp; /\.html$/.test(act)) { e.preventDefault(); go(act); } });
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</template>
+<template data-screen="session-shared">&lt;!doctype html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;D-2. 상담사 회기 페이지 · 공유 완료(읽기 전용) + 공유 모달&lt;/title&gt;
+&lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap"&gt;
+&lt;script src="https://cdn.tailwindcss.com/3.4.17"&gt;&lt;/script&gt;
+&lt;script&gt;
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['"IBM Plex Sans KR"', '"Apple SD Gothic Neo"', '"Malgun Gothic"', 'sans-serif'] },
+  colors: {
+    canvas: '#F5F7F6', surface: '#FFFFFF', ink: '#1E2925', muted: '#5B6862', line: '#DFE5E2',
+    brand: { DEFAULT: '#2E6A5C', hover: '#25574B', soft: '#E7F1EE' },
+    draft: { DEFAULT: '#9A5B0B', soft: '#FDF3E1' },
+    danger: { DEFAULT: '#B4321F', soft: '#FCEBE8' }
+  } } } };
+&lt;/script&gt;
+&lt;style&gt;[hidden] { display: none !important; }&lt;/style&gt;
+&lt;/head&gt;
+&lt;body class="min-h-screen bg-canvas font-sans text-ink antialiased"&gt;
+
+&lt;header class="border-b border-line bg-surface"&gt;
+  &lt;div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-4"&gt;
+    &lt;a href="dashboard.html" class="inline-flex h-8 items-center gap-1 rounded-md px-2 text-sm text-muted hover:bg-canvas hover:text-ink"&gt;‹ 대시보드로 돌아가기&lt;/a&gt;
+    &lt;p class="text-sm font-semibold text-brand"&gt;회기노트&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+
+&lt;main class="mx-auto max-w-5xl space-y-6 px-4 py-6"&gt;
+
+  &lt;div class="flex flex-wrap items-end justify-between gap-4"&gt;
+    &lt;div&gt;
+      &lt;p class="text-sm text-muted"&gt;김하늘&lt;/p&gt;
+      &lt;div class="mt-1 flex items-center gap-3"&gt;
+        &lt;h1 class="text-2xl font-bold"&gt;1회기&lt;/h1&gt;
+        &lt;span class="rounded-full bg-brand-soft px-2.5 py-0.5 text-xs font-medium text-brand"&gt;공유 완료&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;p class="mt-1 text-sm text-muted tabular-nums"&gt;상담 날짜 2026.10.13 · 공유 2026.10.14&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;button data-open="modal-link" class="inline-flex h-10 items-center rounded-md bg-brand px-4 text-sm font-medium text-white hover:bg-brand-hover"&gt;공유 링크 보기&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;p class="rounded-md border border-line bg-surface px-4 py-3 text-sm text-muted"&gt;공유된 회기는 수정할 수 없습니다. 내담자의 과제 체크와 메모는 내담자만 볼 수 있습니다.&lt;/p&gt;
+
+  &lt;section class="rounded-xl border border-line bg-surface p-5"&gt;
+    &lt;div class="flex items-center gap-2"&gt;
+      &lt;h2 class="text-base font-semibold"&gt;상담 원문&lt;/h2&gt;
+      &lt;span class="rounded bg-canvas px-1.5 py-0.5 text-[11px] font-medium text-muted"&gt;상담사만&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="mt-3 max-h-48 overflow-y-auto whitespace-pre-line rounded-md bg-canvas px-4 py-3 text-sm leading-relaxed"&gt;상담사: 오늘 어떤 이야기를 나누고 싶으세요?
+내담자: 졸업이 다가오는데 뭘 해야 할지 모르겠어요. 다들 준비가 되어 있는 것 같은데 저만 멈춰 있는 느낌이에요.
+상담사: 멈춰 있다고 느낄 때 주로 어떤 상황인가요?
+내담자: 친구들 취업 소식 들을 때요. 그날은 아무것도 손에 안 잡혀요.
+상담사: 다음 주까지 그런 순간이 오면 그때 든 생각을 짧게 메모해 보면 어떨까요?
+내담자: 네, 해볼게요.&lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;div class="grid gap-4 lg:grid-cols-2"&gt;
+    &lt;section class="min-w-0 rounded-xl border border-line bg-surface p-5"&gt;
+      &lt;div class="flex items-center gap-2"&gt;
+        &lt;h2 class="text-sm font-semibold"&gt;상담사용 상세 기록&lt;/h2&gt;
+        &lt;span class="rounded bg-canvas px-1.5 py-0.5 text-[11px] font-medium text-muted"&gt;상담사만&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;p class="mt-3 whitespace-pre-line text-sm leading-relaxed"&gt;[주제] 졸업 앞둔 진로 불안, 또래 비교
+
+[주요 내용] 친구들의 취업 소식을 들을 때 무력감을 느끼며 일상 활동에 집중하기 어려움을 보고함.
+
+[합의 사항] 비교로 인해 멈춰 있다고 느끼는 순간의 생각을 짧게 메모하기.&lt;/p&gt;
+    &lt;/section&gt;
+
+    &lt;section class="min-w-0 rounded-xl border border-line bg-surface p-5"&gt;
+      &lt;div class="flex items-center gap-2"&gt;
+        &lt;h2 class="text-sm font-semibold"&gt;내담자용 요약&lt;/h2&gt;
+        &lt;span class="rounded bg-brand-soft px-1.5 py-0.5 text-[11px] font-medium text-brand"&gt;공유됨&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;p class="mt-3 text-sm leading-relaxed"&gt;첫 상담에서는 졸업을 앞두고 혼자 멈춰 있는 것 같은 마음에 대해 이야기를 나눴어요. 특히 친구들의 취업 소식을 들을 때 그 마음이 커진다고 말씀해 주셨어요. 다음 상담까지는 그런 순간에 떠오른 생각을 짧게 적어보기로 했어요.&lt;/p&gt;
+    &lt;/section&gt;
+
+    &lt;section class="min-w-0 rounded-xl border border-line bg-surface p-5"&gt;
+      &lt;div class="flex items-center gap-2"&gt;
+        &lt;h2 class="text-sm font-semibold"&gt;실천 과제&lt;/h2&gt;
+        &lt;span class="rounded bg-brand-soft px-1.5 py-0.5 text-[11px] font-medium text-brand"&gt;공유됨&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;ol class="mt-3 list-decimal space-y-1.5 pl-5 text-sm"&gt;
+        &lt;li&gt;멈춰 있다고 느끼는 순간, 떠오른 생각을 한 줄로 메모하기&lt;/li&gt;
+      &lt;/ol&gt;
+    &lt;/section&gt;
+
+    &lt;section class="min-w-0 rounded-xl border border-line bg-surface p-5"&gt;
+      &lt;div class="flex items-center gap-2"&gt;
+        &lt;h2 class="text-sm font-semibold"&gt;다음 상담 준비 질문&lt;/h2&gt;
+        &lt;span class="rounded bg-brand-soft px-1.5 py-0.5 text-[11px] font-medium text-brand"&gt;공유됨&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;ol class="mt-3 list-decimal space-y-1.5 pl-5 text-sm"&gt;
+        &lt;li&gt;다른 사람과 비교하지 않았을 때, 나는 어떤 일에 시간을 쓰고 싶나요?&lt;/li&gt;
+        &lt;li&gt;이번 주에 조금이라도 편안했던 순간은 언제였나요?&lt;/li&gt;
+      &lt;/ol&gt;
+    &lt;/section&gt;
+  &lt;/div&gt;
+&lt;/main&gt;
+
+&lt;!-- 모달: 공유 링크 / QR (공유 확정 직후 자동 표시, '공유 링크 보기'로 재표시) --&gt;
+&lt;div id="modal-link" hidden class="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 px-4"&gt;
+  &lt;div role="dialog" aria-modal="true" aria-labelledby="link-title" class="w-full max-w-md rounded-xl bg-surface p-6 shadow-xl"&gt;
+    &lt;div class="flex items-start justify-between gap-4"&gt;
+      &lt;div&gt;
+        &lt;h2 id="link-title" class="text-lg font-semibold"&gt;1회기가 공유되었습니다&lt;/h2&gt;
+        &lt;p class="mt-1 text-sm text-muted"&gt;아래 링크나 QR 코드를 내담자에게 전달하세요.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;button data-close aria-label="닫기" class="inline-flex h-8 w-8 items-center justify-center rounded-md text-muted hover:bg-canvas"&gt;✕&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div class="mt-5 flex justify-center"&gt;
+      &lt;div class="rounded-lg border border-line bg-white p-3"&gt;
+        &lt;svg id="qr" width="160" height="160" viewBox="0 0 25 25" role="img" aria-label="공유 링크 QR 코드 (예시)" shape-rendering="crispEdges"&gt;&lt;/svg&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;p class="mt-2 text-center text-xs text-muted"&gt;예시 이미지 · 실제 구현은 qrcode.react&lt;/p&gt;
+
+    &lt;label for="share-url" class="mt-5 block text-sm font-medium"&gt;공유 링크&lt;/label&gt;
+    &lt;div class="mt-1.5 flex gap-2"&gt;
+      &lt;input id="share-url" readonly value="https://hoegi-note.vercel.app/client/k7Qp2x9LmZ/sessions/3f2a9c1e" class="h-10 min-w-0 flex-1 rounded-md border border-line bg-canvas px-3 text-sm text-muted"&gt;
+      &lt;button id="copy-btn" class="inline-flex h-10 shrink-0 items-center rounded-md border border-line px-4 text-sm font-medium hover:bg-canvas"&gt;복사&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="mt-2 text-right"&gt;
+      &lt;a href="client-home.html" class="text-sm font-medium text-brand underline-offset-4 hover:underline"&gt;내담자 화면으로 열어보기 ↗&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;p class="mt-3 text-xs leading-relaxed text-muted"&gt;링크를 가진 사람은 누구나 이 내담자의 공유된 회기를 볼 수 있습니다.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+// 미리보기용 모달 토글 (실제 구현은 shadcn/ui Dialog 사용)
+document.querySelectorAll('[data-open]').forEach(b =&gt; b.addEventListener('click', () =&gt; { document.getElementById(b.dataset.open).hidden = false; }));
+document.querySelectorAll('[data-close]').forEach(b =&gt; b.addEventListener('click', () =&gt; { b.closest('[id^="modal-"]').hidden = true; }));
+document.querySelectorAll('[id^="modal-"]').forEach(m =&gt; m.addEventListener('click', e =&gt; { if (e.target === m) m.hidden = true; }));
+document.addEventListener('keydown', e =&gt; { if (e.key === 'Escape') document.querySelectorAll('[id^="modal-"]').forEach(m =&gt; m.hidden = true); });
+
+// 복사 버튼 (실제 구현: navigator.clipboard.writeText + 토스트)
+document.getElementById('copy-btn').addEventListener('click', e =&gt; {
+  const input = document.getElementById('share-url');
+  const done = () =&gt; { e.target.textContent = '복사됨'; setTimeout(() =&gt; e.target.textContent = '복사', 1500); };
+  try { navigator.clipboard.writeText(input.value).then(done, () =&gt; { input.select(); }); } catch { input.select(); }
+});
+
+// 예시용 QR 모양 그리기 (실제 QR 아님)
+(function () {
+  const svg = document.getElementById('qr'), n = 25, ns = 'http://www.w3.org/2000/svg';
+  let s = 7;
+  const rnd = () =&gt; (s = (s * 9301 + 49297) % 233280) / 233280;
+  const finder = (x, y, i, j) =&gt; {
+    const dx = i - x, dy = j - y;
+    if (dx &lt; 0 || dy &lt; 0 || dx &gt; 6 || dy &gt; 6) return null;
+    return dx === 0 || dy === 0 || dx === 6 || dy === 6 || (dx &gt;= 2 &amp;&amp; dx &lt;= 4 &amp;&amp; dy &gt;= 2 &amp;&amp; dy &lt;= 4);
+  };
+  for (let j = 0; j &lt; n; j++) for (let i = 0; i &lt; n; i++) {
+    let on = finder(0, 0, i, j);
+    if (on === null) on = finder(n - 7, 0, i, j);
+    if (on === null) on = finder(0, n - 7, i, j);
+    if (on === null) on = rnd() &gt; 0.52;
+    if (on) { const r = document.createElementNS(ns, 'rect'); r.setAttribute('x', i); r.setAttribute('y', j); r.setAttribute('width', 1); r.setAttribute('height', 1); r.setAttribute('fill', '#1E2925'); svg.appendChild(r); }
+  }
+})();
+&lt;/script&gt;
+&lt;script&gt;
+(function () {
+  if (window.parent === window) return;
+  function go(href) { window.parent.postMessage({ goto: href.split('?')[0].split('#')[0] }, '*'); }
+  document.addEventListener('click', function (e) { var a = e.target.closest('a[href$=".html"]'); if (a) { e.preventDefault(); go(a.getAttribute('href')); } });
+  document.addEventListener('submit', function (e) { var f = e.target; var act = f.getAttribute('action'); if (act &amp;&amp; /\.html$/.test(act)) { e.preventDefault(); go(act); } });
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</template>
+<template data-screen="signup">&lt;!doctype html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;B. 상담사 회원가입 (/signup)&lt;/title&gt;
+&lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap"&gt;
+&lt;script src="https://cdn.tailwindcss.com/3.4.17"&gt;&lt;/script&gt;
+&lt;script&gt;
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['"IBM Plex Sans KR"', '"Apple SD Gothic Neo"', '"Malgun Gothic"', 'sans-serif'] },
+  colors: {
+    canvas: '#F5F7F6', surface: '#FFFFFF', ink: '#1E2925', muted: '#5B6862', line: '#DFE5E2',
+    brand: { DEFAULT: '#2E6A5C', hover: '#25574B', soft: '#E7F1EE' },
+    draft: { DEFAULT: '#9A5B0B', soft: '#FDF3E1' },
+    danger: { DEFAULT: '#B4321F', soft: '#FCEBE8' }
+  } } } };
+&lt;/script&gt;
+&lt;style&gt;[hidden] { display: none !important; }&lt;/style&gt;
+&lt;/head&gt;
+&lt;body class="min-h-screen bg-canvas font-sans text-ink antialiased"&gt;
+&lt;main class="flex min-h-screen items-center justify-center px-4 py-12"&gt;
+  &lt;div class="w-full max-w-sm"&gt;
+    &lt;div class="mb-8 text-center"&gt;
+      &lt;p class="text-sm font-semibold tracking-wide text-brand"&gt;회기노트&lt;/p&gt;
+      &lt;h1 class="mt-2 text-2xl font-bold"&gt;상담사 회원가입&lt;/h1&gt;
+      &lt;p class="mt-2 text-sm text-muted"&gt;아이디와 비밀번호만으로 가입할 수 있습니다.&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;form action="login.html" class="space-y-4 rounded-xl border border-line bg-surface p-6 shadow-sm"&gt;
+      &lt;div class="space-y-1.5"&gt;
+        &lt;label for="su-username" class="text-sm font-medium"&gt;아이디&lt;/label&gt;
+        &lt;input id="su-username" type="text" value="counselor01"
+          class="h-10 w-full rounded-md border border-danger bg-surface px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;
+        &lt;p class="text-xs text-danger"&gt;이미 사용 중인 아이디입니다.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="space-y-1.5"&gt;
+        &lt;label for="su-password" class="text-sm font-medium"&gt;비밀번호&lt;/label&gt;
+        &lt;input id="su-password" type="password" value="password1"
+          class="h-10 w-full rounded-md border border-line bg-surface px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;
+        &lt;p class="text-xs text-muted"&gt;8자 이상 입력하세요.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="space-y-1.5"&gt;
+        &lt;label for="su-password2" class="text-sm font-medium"&gt;비밀번호 확인&lt;/label&gt;
+        &lt;input id="su-password2" type="password" value="password2"
+          class="h-10 w-full rounded-md border border-danger bg-surface px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"&gt;
+        &lt;p class="text-xs text-danger"&gt;비밀번호가 일치하지 않습니다.&lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;button type="submit" class="inline-flex h-10 w-full items-center justify-center rounded-md bg-brand text-sm font-medium text-white hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"&gt;가입하기&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;!-- 가입 성공 시 로그인 페이지 상단에 표시할 메시지 예시 --&gt;
+    &lt;p class="mt-4 rounded-md bg-brand-soft px-3 py-2 text-center text-sm text-brand"&gt;가입이 완료되었습니다. 로그인해 주세요.&lt;/p&gt;
+
+    &lt;p class="mt-6 text-center text-sm text-muted"&gt;
+      이미 계정이 있으신가요? &lt;a href="login.html" class="font-medium text-brand underline-offset-4 hover:underline"&gt;로그인&lt;/a&gt;
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/main&gt;
+&lt;script&gt;
+(function () {
+  if (window.parent === window) return;
+  function go(href) { window.parent.postMessage({ goto: href.split('?')[0].split('#')[0] }, '*'); }
+  document.addEventListener('click', function (e) { var a = e.target.closest('a[href$=".html"]'); if (a) { e.preventDefault(); go(a.getAttribute('href')); } });
+  document.addEventListener('submit', function (e) { var f = e.target; var act = f.getAttribute('action'); if (act &amp;&amp; /\.html$/.test(act)) { e.preventDefault(); go(act); } });
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</template>
+<script>
+const view = document.getElementById('view');
+const src = {};
+document.querySelectorAll('template[data-screen]').forEach(t => { const d = document.createElement('textarea'); d.innerHTML = t.innerHTML; src[t.dataset.screen] = d.value; });
+function show(name) {
+  if (!src[name]) name = 'login';
+  view.srcdoc = src[name];
+  if (location.hash !== '#' + name) history.replaceState(null, '', '#' + name);
+  document.title = '회기노트';
+}
+window.addEventListener('message', e => { const g = e.data && e.data.goto; if (g) show(g.replace(/\.html$/, '')); });
+window.addEventListener('hashchange', () => show(location.hash.slice(1)));
+show(location.hash.slice(1));
+</script>
+</body>
+</html>

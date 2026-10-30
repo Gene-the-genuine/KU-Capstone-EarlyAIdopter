@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F. 내담자 회기 상세 (/client/[token]/sessions/[sessionId]) · 반응형</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['"IBM Plex Sans KR"', '"Apple SD Gothic Neo"', '"Malgun Gothic"', 'sans-serif'] },
+  colors: {
+    canvas: '#F5F7F6', surface: '#FFFFFF', ink: '#1E2925', muted: '#5B6862', line: '#DFE5E2',
+    brand: { DEFAULT: '#2E6A5C', hover: '#25574B', soft: '#E7F1EE' },
+    draft: { DEFAULT: '#9A5B0B', soft: '#FDF3E1' },
+    danger: { DEFAULT: '#B4321F', soft: '#FCEBE8' }
+  } } } };
+</script>
+<style>[hidden] { display: none !important; }</style>
+</head>
+<body class="min-h-screen bg-canvas font-sans text-ink antialiased">
+<header class="border-b border-line bg-surface">
+  <div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
+    <p class="text-sm font-semibold text-brand">회기노트</p>
+    <span class="text-sm text-muted">김하늘 님</span>
+  </div>
+</header>
+<main class="mx-auto max-w-5xl px-4 pb-12 pt-4">
+
+  <a href="client-home.html" class="inline-flex h-10 items-center gap-1 rounded-md px-2 text-sm text-muted hover:bg-surface hover:text-ink">‹ 내 상담 기록</a>
+
+  <div class="mt-3">
+    <p class="text-sm text-muted tabular-nums">2026.10.20</p>
+    <h1 class="mt-1 text-2xl font-bold">2회기 상담</h1>
+  </div>
+
+  <!-- 모바일: 한 줄로 쌓임 / 데스크톱(lg): 왼쪽 요약·과제, 오른쪽 질문 메모 -->
+  <div class="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-start lg:gap-6">
+    <div class="min-w-0 space-y-4">
+      <section class="rounded-xl border border-line bg-surface p-5 lg:p-6">
+        <h2 class="text-sm font-semibold text-brand">이번 상담 요약</h2>
+        <p class="mt-3 text-[16px] leading-[1.8]">이번 상담에서는 지원서를 쓰려고 할 때마다 미루게 되는 마음에 대해 이야기를 나눴어요. 선택을 잘못하면 돌이킬 수 없을 것 같다는 걱정이 크게 느껴진다고 말씀해 주셨어요. 부모님의 기대와 하늘 님의 마음 사이에서 고민하고 계신다는 점도 함께 살펴봤어요. 다음 상담 전까지 관심 있는 직무를 가볍게 적어보고, 하루 30분은 쉬어가는 시간을 갖기로 했어요.</p>
+      </section>
+
+      <section class="rounded-xl border border-line bg-surface p-5 lg:p-6">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-semibold text-brand">실천 과제</h2>
+          <span class="text-xs text-muted tabular-nums">2개 중 1개 완료</span>
+        </div>
+        <ul class="mt-3 space-y-2">
+          <li>
+            <label for="task-1" class="flex cursor-pointer items-start gap-3 rounded-lg border border-line p-3.5 has-[:checked]:border-brand/40 has-[:checked]:bg-brand-soft">
+              <input id="task-1" type="checkbox" checked class="mt-0.5 h-5 w-5 shrink-0 rounded border-line accent-brand">
+              <span class="text-[15px] leading-relaxed">관심 있는 직무 3가지를 적고, 끌리는 이유를 한 줄씩 쓰기</span>
+            </label>
+          </li>
+          <li>
+            <label for="task-2" class="flex cursor-pointer items-start gap-3 rounded-lg border border-line p-3.5 has-[:checked]:border-brand/40 has-[:checked]:bg-brand-soft">
+              <input id="task-2" type="checkbox" class="mt-0.5 h-5 w-5 shrink-0 rounded border-line accent-brand">
+              <span class="text-[15px] leading-relaxed">하루 30분, 지원서와 상관없이 산책하기</span>
+            </label>
+          </li>
+        </ul>
+        <p class="mt-3 text-xs text-muted">체크하면 바로 저장돼요.</p>
+      </section>
+    </div>
+
+    <section class="min-w-0 rounded-xl border border-line bg-surface p-5 lg:sticky lg:top-6 lg:p-6">
+      <h2 class="text-sm font-semibold text-brand">다음 상담 전에 생각해 볼 질문</h2>
+      <p class="mt-1 text-xs text-muted">적어둔 메모는 하늘 님만 볼 수 있어요.</p>
+      <form class="mt-4 space-y-5" onsubmit="event.preventDefault()">
+        <div class="space-y-2">
+          <label for="q-1" class="block text-[15px] font-medium leading-relaxed">1. 선택을 미루고 싶어질 때, 그 순간 가장 걱정되는 것은 무엇인가요?</label>
+          <textarea id="q-1" rows="3" placeholder="떠오르는 대로 적어보세요" class="w-full rounded-lg border border-line px-3 py-2.5 text-[15px] leading-relaxed focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25">다른 길을 갔으면 더 잘됐을 거라는 후회가 생길까 봐.</textarea>
+        </div>
+        <div class="space-y-2">
+          <label for="q-2" class="block text-[15px] font-medium leading-relaxed">2. 부모님의 기대와 내 마음이 겹치는 부분이 있다면 어디일까요?</label>
+          <textarea id="q-2" rows="3" placeholder="떠오르는 대로 적어보세요" class="w-full rounded-lg border border-line px-3 py-2.5 text-[15px] leading-relaxed focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25"></textarea>
+        </div>
+        <button type="submit" class="inline-flex h-12 w-full items-center justify-center rounded-lg bg-brand text-[15px] font-medium text-white hover:bg-brand-hover lg:h-11">메모 저장</button>
+        <p role="status" class="text-center text-sm text-brand">메모를 저장했어요.</p>
+      </form>
+    </section>
+  </div>
+
+  <!-- 이전/다음 회기 -->
+  <nav class="mt-6 grid grid-cols-2 gap-3 lg:flex lg:justify-between" aria-label="회기 이동">
+    <a href="client-session.html" class="inline-flex h-12 items-center justify-center rounded-lg border border-line bg-surface px-6 text-sm font-medium hover:border-brand/50 lg:h-11">‹ 1회기</a>
+    <span aria-disabled="true" class="inline-flex h-12 items-center justify-center rounded-lg border border-line bg-surface px-6 text-sm text-muted/50 lg:h-11">다음 회기 없음</span>
+  </nav>
+</main>
+</body>
+</html>

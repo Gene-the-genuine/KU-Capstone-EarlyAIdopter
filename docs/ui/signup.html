@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>B. 상담사 회원가입 (/signup)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['"IBM Plex Sans KR"', '"Apple SD Gothic Neo"', '"Malgun Gothic"', 'sans-serif'] },
+  colors: {
+    canvas: '#F5F7F6', surface: '#FFFFFF', ink: '#1E2925', muted: '#5B6862', line: '#DFE5E2',
+    brand: { DEFAULT: '#2E6A5C', hover: '#25574B', soft: '#E7F1EE' },
+    draft: { DEFAULT: '#9A5B0B', soft: '#FDF3E1' },
+    danger: { DEFAULT: '#B4321F', soft: '#FCEBE8' }
+  } } } };
+</script>
+<style>[hidden] { display: none !important; }</style>
+</head>
+<body class="min-h-screen bg-canvas font-sans text-ink antialiased">
+<main class="flex min-h-screen items-center justify-center px-4 py-12">
+  <div class="w-full max-w-sm">
+    <div class="mb-8 text-center">
+      <p class="text-sm font-semibold tracking-wide text-brand">회기노트</p>
+      <h1 class="mt-2 text-2xl font-bold">상담사 회원가입</h1>
+      <p class="mt-2 text-sm text-muted">아이디와 비밀번호만으로 가입할 수 있습니다.</p>
+    </div>
+
+    <form action="login.html" class="space-y-4 rounded-xl border border-line bg-surface p-6 shadow-sm">
+      <div class="space-y-1.5">
+        <label for="su-username" class="text-sm font-medium">아이디</label>
+        <input id="su-username" type="text" value="counselor01"
+          class="h-10 w-full rounded-md border border-danger bg-surface px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25">
+        <p class="text-xs text-danger">이미 사용 중인 아이디입니다.</p>
+      </div>
+      <div class="space-y-1.5">
+        <label for="su-password" class="text-sm font-medium">비밀번호</label>
+        <input id="su-password" type="password" value="password1"
+          class="h-10 w-full rounded-md border border-line bg-surface px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25">
+        <p class="text-xs text-muted">8자 이상 입력하세요.</p>
+      </div>
+      <div class="space-y-1.5">
+        <label for="su-password2" class="text-sm font-medium">비밀번호 확인</label>
+        <input id="su-password2" type="password" value="password2"
+          class="h-10 w-full rounded-md border border-danger bg-surface px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25">
+        <p class="text-xs text-danger">비밀번호가 일치하지 않습니다.</p>
+      </div>
+
+      <button type="submit" class="inline-flex h-10 w-full items-center justify-center rounded-md bg-brand text-sm font-medium text-white hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">가입하기</button>
+    </form>
+
+    <!-- 가입 성공 시 로그인 페이지 상단에 표시할 메시지 예시 -->
+    <p class="mt-4 rounded-md bg-brand-soft px-3 py-2 text-center text-sm text-brand">가입이 완료되었습니다. 로그인해 주세요.</p>
+
+    <p class="mt-6 text-center text-sm text-muted">
+      이미 계정이 있으신가요? <a href="login.html" class="font-medium text-brand underline-offset-4 hover:underline">로그인</a>
+    </p>
+  </div>
+</main>
+</body>
+</html>

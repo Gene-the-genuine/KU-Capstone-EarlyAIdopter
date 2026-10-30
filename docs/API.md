@@ -278,11 +278,13 @@ body는 임시 저장과 같습니다. **저장과 공유가 한 번에 처리�
     "preparationQuestions": [{ "id": "q1…", "question": "공고를 확인하지 않았을 때 …?", "clientAnswer": "생각해 보니 아직은 없었어요." }]
   },
   "prevSessionId": null,
-  "nextSessionId": "s2…"
+  "prevSessionNumber": null,
+  "nextSessionId": "s2…",
+  "nextSessionNumber": 2
 }
 ```
 
-`prevSessionId`와 `nextSessionId`는 공유 완료 회기 사이에서만 움직입니다. `null`이면 그 방향 버튼을 숨기거나 `disabled`로 두세요.
+`prevSessionId`와 `nextSessionId`는 공유 완료 회기 사이에서만 움직입니다. `null`이면 그 방향 버튼을 숨기거나 `disabled`로 두세요. `…SessionNumber`는 버튼 글자("‹ 1회기")용 회기 번호입니다.
 
 ### 과제 체크 `PATCH /api/client/{token}/sessions/{sessionId}/action-items/{itemId}`
 

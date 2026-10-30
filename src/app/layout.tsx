@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans_KR } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
+import { SERVICE_NAME } from "@/lib/brand";
 import "./globals.css";
 
 // DESIGN.md 3장: IBM Plex Sans KR (400 본문 · 500 버튼/라벨 · 600 카드 제목 · 700 페이지 제목)
@@ -12,7 +13,8 @@ const plexSansKr = IBM_Plex_Sans_KR({
 });
 
 export const metadata: Metadata = {
-  title: "회기노트", // 서비스 이름은 가칭 (DESIGN.md 0장)
+  // 브라우저 탭 제목: 각 페이지의 title 뒤에 서비스 이름이 붙습니다. (예: "로그인 · 회기노트")
+  title: { default: SERVICE_NAME, template: `%s · ${SERVICE_NAME}` },
   description: "AI 기반 상담 회기 기록 및 실천 지원 서비스 (데모: 합성 데이터만 사용)",
 };
 
