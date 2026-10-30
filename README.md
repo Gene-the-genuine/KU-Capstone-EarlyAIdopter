@@ -26,8 +26,8 @@ cp .env.example .env.local     # 그다음 .env.local 의 빈 값을 채웁니�
 npm run dev                    # http://localhost:3000
 ```
 
-- 키 값은 Supabase를 만든 팀원에게 **1:1로** 받으세요. 깃허브나 단톡방에 올리면 안 됩니다.
-- OpenAI 키가 없으면 `.env.local`에서 `AI_MOCK=true`로 두세요. AI 정리 버튼이 1초 뒤 예시 결과를 돌려주므로 화면 개발에는 지장이 없습니다.
+- Supabase 키 값은 Supabase를 만든 팀원에게 **1:1로** 받으세요. 깃허브나 단톡방에 올리면 안 됩니다.
+- AI 키는 각자 학교 llm.korea.ac.kr에서 발급받아 넣습니다(아래 3장). 키가 없거나 크레딧을 아끼려면 `.env.local`에서 `AI_MOCK=true`로 두세요. AI 정리 버튼이 1초 뒤 예시 결과를 돌려주므로 화면 개발에는 지장이 없습니다.
 - 데모 계정: 아이디 `demo` / 비밀번호 `demo1234` (DB에 `supabase/seed.sql`을 넣은 경우).
 
 백엔드가 명세대로 동작하는지 한 번에 확인하려면, 서버를 켠 상태에서 다른 터미널로:
@@ -91,13 +91,27 @@ npm run test:api     # SPEC 10장 "완료 검증 시나리오"를 API로 그대�
 | `SUPABASE_URL` | 필수 | Supabase 프로젝트 주소 | Supabase → Project Settings → Data API의 Project URL |
 | `SUPABASE_SECRET_KEY` | 필수 | 서버 전용 DB 키 (`sb_secret_…`) | Supabase → Project Settings → API Keys → Secret keys |
 | `SESSION_SECRET` | 필수 | 로그인 쿠키 암호화 비밀값 (32자 이상) | `node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"` |
-| `OPENAI_API_KEY` | AI 정리에 필요 | OpenAI API 키 | https://platform.openai.com/api-keys |
+| `OPENAI_API_KEY` | AI 정리에 필요 | AI API 키. 학교 키(`baze_…`) 또는 OpenAI 키(`sk-…`) | 학교: llm.korea.ac.kr → 왼쪽 아래 API Gateway → API 키 생성 / OpenAI: https://platform.openai.com/api-keys |
+| `OPENAI_BASE_URL` | 학교 키면 필수 | AI API 주소. 학교 키면 `https://api.baze.co/v1/gateway`, OpenAI 키면 지움 | |
 | `OPENAI_MODEL` | 선택 | 모델 (기본 `gpt-6-luna`) | |
 | `OPENAI_REASONING_EFFORT` | 선택 | 추론 강도 `none`/`low`/`medium`/`high` (기본 `low`) | |
-| `AI_MOCK` | 선택 | `true`면 OpenAI를 부르지 않고 예시 결과를 돌려줌 | 화면 개발용 |
+| `AI_MOCK` | 선택 | `true`면 AI를 부르지 않고 예시 결과를 돌려줌 | 화면 개발용, 크레딧 절약 |
 
 - `NEXT_PUBLIC_`으로 시작하는 환경변수는 브라우저에 그대로 노출됩니다. **Supabase 키에는 절대 붙이지 마세요.** 이 앱은 브라우저가 DB를 직접 부르지 않아서 publishable key는 쓰지 않습니다.
 - `SESSION_SECRET`을 바꾸면 모든 상담사가 로그아웃됩니다.
+
+### 학교 AI 키 (llm.korea.ac.kr)
+
+학교 AI 서비스(BAZE 게이트웨이)는 OpenAI와 같은 방식으로 부를 수 있어서, 키와 주소만 넣으면 코드 변경 없이 동작합니다(2026-10-30 실제 호출로 확인).
+
+| 항목 | 내용 |
+|---|---|
+| 비용 | AI 정리 1회에 약 5~6 크레딧 (개인정보 가림 5 + 모델 사용료 1 미만). 월 크레딧은 매월 1일에 다시 채워집니다. 월 3,000 크레딧이면 약 500회 |
+| 개인정보 가림 | 학교가 API 요청에도 개인정보 가림을 켜 두었습니다. 원문의 전화번호·이메일·생년월일 등은 `[PHONE]`, `[EMAIL]`, `[DATE-OF-BIRTH]`로 바뀐 채 AI에 전달되고, AI 결과에도 그대로 나옵니다. 이름은 가리지 않습니다 |
+| 누구의 크레딧? | 키를 만든 사람의 크레딧에서 차감됩니다. 팀원은 각자 자기 키를 쓰고, 배포(Vercel)에는 한 사람의 키를 넣습니다 |
+| 남은 크레딧 | `curl -H "Authorization: Bearer <키>" https://api.baze.co/v1/gateway/credits/` |
+
+AI 정리가 `AI_FAILED`로 실패하면 `npm run dev` 터미널의 `[AI] 정리 실패` 로그에서 상태 숫자를 보세요. 401은 키와 주소가 안 맞는 경우(학교 키인데 `OPENAI_BASE_URL`이 비었거나, OpenAI 키인데 남아 있음), 402는 크레딧 소진, 403은 쓸 수 없는 모델, 429는 요청 과다입니다.
 
 ## 4. 동작 방식
 
@@ -109,12 +123,12 @@ Next.js 서버 (src/app/api → src/server)
    │  ① 로그인 쿠키 확인 (상담사)  또는  공유 토큰 확인 (내담자)
    │  ② 이 데이터를 이 사람이 봐도 되는지 확인 (counselor_id / status='shared')
    ├──▶ Supabase PostgreSQL  (secret key, 서버에서만)
-   └──▶ OpenAI  (AI 정리할 때만, 상담 원문만 보냄)
+   └──▶ AI: 학교 게이트웨이(BAZE) 또는 OpenAI  (AI 정리할 때만, 상담 원문만 보냄)
 ```
 
 - **상담사 로그인**: Supabase Auth 대신 `counselors` 테이블(아이디 + bcrypt로 암호화한 비밀번호)과 암호화된 httpOnly 쿠키(iron-session)를 씁니다(SPEC 1장). 이메일 인증이 없어 시연이 쉽습니다. 7일 동안 유지됩니다.
 - **내담자 접근**: 로그인 없이 `/client/{공유 토큰}` 링크로 들어옵니다. 토큰은 내담자를 추가할 때 한 번 무작위로 만들어지고(32글자), 내담자를 삭제하면 함께 사라집니다.
-- **AI 정리**: 화면에 입력된 상담 원문만 OpenAI에 보내고, 정해진 JSON 모양(상담사 기록·내담자 요약·과제·질문)으로만 받습니다. 결과는 저장하지 않고 화면에만 채웁니다. 상담사가 고친 뒤 임시 저장이나 공유 확정을 눌러야 저장됩니다.
+- **AI 정리**: 화면에 입력된 상담 원문만 AI에 보내고, 정해진 JSON 모양(상담사 기록·내담자 요약·과제·질문)으로만 받습니다. 결과는 저장하지 않고 화면에만 채웁니다. 상담사가 고친 뒤 임시 저장이나 공유 확정을 눌러야 저장됩니다.
 
 ## 5. 데이터베이스 (Supabase)
 
@@ -175,7 +189,7 @@ delete from public.counselors where username like 'apitest\_%';
 - 서버 위치는 `vercel.json`에서 **서울(icn1)**로 정해 두었습니다. Supabase도 서울이라 DB 왕복이 가장 짧습니다.
 - Node.js 버전은 `package.json`의 `engines`(22.13 이상)를 따릅니다.
 - QR 시연: localhost 주소는 휴대폰에서 열리지 않습니다. Vercel 주소로 시연하세요(SPEC 4장).
-- **OpenAI 사용 한도를 꼭 설정하세요** (platform.openai.com → Settings → Limits). 회원가입이 열려 있어 배포 주소를 아는 누구나 가입해 AI 정리를 쓸 수 있습니다.
+- **AI 비용은 배포에 넣은 키 주인이 냅니다.** 회원가입이 열려 있어 배포 주소를 아는 누구나 가입해 AI 정리를 쓸 수 있습니다. 학교 키는 월 크레딧이 떨어지면 AI 정리가 멈추고(402), OpenAI 키라면 사용 한도를 꼭 거세요 (platform.openai.com → Settings → Limits).
 
 ## 8. 기술 선택 메모 (왜 이렇게 만들었나)
 
@@ -187,6 +201,7 @@ delete from public.counselors where username like 'apitest\_%';
 | `cacheComponents` 끔 | create-next-app 16.4 기본값은 켜짐. 켜 두면 페이지에서 `cookies()`나 `params`를 `<Suspense>` 밖에서 읽을 때 **빌드 오류**가 나는데, AI 코딩 도구가 만드는 코드 대부분이 이 규칙을 모름. 이 앱은 화면마다 사람별 데이터라 캐시 이득도 거의 없음 |
 | `middleware.ts`가 아니라 `src/proxy.ts` | Next.js 16에서 이름이 바뀜. 화면 이동용 1차 검사일 뿐이고, 데이터 보호는 각 API가 직접 함 |
 | AI 모델 `gpt-6-luna` | 저렴하고(100만 토큰당 입력 $0.10) JSON 구조화 출력을 지원. `gpt-5-mini`/`gpt-5-nano`는 2026-12-11 서비스 종료 예정 |
+| AI 키는 학교 게이트웨이(BAZE) 추천 | 학생 계정에 매달 크레딧이 나와 팀원 모두 결제 없이 씀. OpenAI와 호출 방식이 같아 주소만 바꾸면 되고, `gpt-6-luna`도 같은 이름으로 제공 |
 | shadcn/ui Radix 기반 | 튜토리얼과 AI 코딩 도구가 가장 많이 아는 형태(`asChild` 등) |
 | Supabase 서울 리전 + Vercel 서울 리전 | 파리 리전에서는 한국에서 DB 요청 1번에 약 0.8초가 걸렸음(측정) |
 
@@ -203,7 +218,7 @@ delete from public.counselors where username like 'apitest\_%';
 ## 10. 알려진 한계
 
 - 회원가입이 누구에게나 열려 있습니다(SPEC 결정). 배포 주소가 퍼지면 모르는 사람이 가입할 수 있습니다.
-- 요청 횟수 제한(rate limit)이 없습니다. AI 비용은 OpenAI 사용 한도로 막으세요.
+- 요청 횟수 제한(rate limit)이 없습니다. AI 비용은 키의 한도(학교 월 크레딧, OpenAI 사용 한도)로만 막힙니다.
 - 내담자 링크는 비밀번호와 같습니다. 링크가 새면 그 내담자의 공유 회기를 누구나 볼 수 있습니다. 내담자를 삭제하면 링크도 함께 막힙니다.
 - 같은 이유로, 링크를 만든 상담사도 그 링크를 열면 내담자 화면(과제 체크·메모)을 볼 수 있습니다. 명세의 "상담사에게 보이지 않음"은 상담사 화면과 상담사 API에서 보여 주지 않는다는 뜻으로 구현했습니다. 진짜로 막으려면 내담자 로그인이 필요합니다(명세 범위 밖).
 - 데모 계정(`demo`/`demo1234`)의 비밀번호가 이 공개 저장소에 적혀 있습니다. 데모 데이터는 모두 가짜입니다.

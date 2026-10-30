@@ -8,7 +8,7 @@
  * - 실행할 때마다 apitest_ 로 시작하는 새 상담사 계정 2개를 만들고, 만든 내담자는 끝에 지웁니다.
  *   쌓인 테스트 계정을 지우려면 Supabase SQL Editor 에서:
  *     delete from public.counselors where username like 'apitest\_%';
- * - AI 정리는 서버 설정대로 동작합니다(AI_MOCK=true 면 예시 결과, 아니면 실제 OpenAI 호출 1~2회).
+ * - AI 정리는 서버 설정대로 동작합니다(AI_MOCK=true 면 예시 결과, 아니면 실제 AI 호출 1~2회. 학교 키면 회당 약 5~6 크레딧).
  */
 
 const BASE_URL = (process.env.BASE_URL ?? "http://localhost:3000").replace(/\/$/, "");

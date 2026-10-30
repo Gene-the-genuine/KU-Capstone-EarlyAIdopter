@@ -12,7 +12,8 @@ import { HttpError } from "./http";
  *
  * - 결과는 아래 AiOutput 모양의 JSON 으로만 받도록 강제합니다(모델이 다른 모양을 낼 수 없음).
  * - 결과를 DB 에 저장하지 않습니다. 상담사가 "임시 저장"/"공유 확정"을 눌러야 저장됩니다.
- * - 환경변수: OPENAI_API_KEY, OPENAI_MODEL, OPENAI_REASONING_EFFORT, AI_MOCK (.env.example 참고)
+ * - 학교 AI 게이트웨이(llm.korea.ac.kr, BAZE)도 OpenAI 와 같은 방식으로 부릅니다. 주소(OPENAI_BASE_URL)만 다르고 코드는 같습니다.
+ * - 환경변수: OPENAI_API_KEY, OPENAI_BASE_URL, OPENAI_MODEL, OPENAI_REASONING_EFFORT, AI_MOCK (.env.example 참고)
  */
 
 const DEFAULT_MODEL = "gpt-6-luna";
@@ -49,7 +50,13 @@ export async function summarizeSourceText(sourceText: string): Promise<AiResult>
     );
   }
 
-  const openai = new OpenAI({ apiKey, timeout: OPENAI_TIMEOUT_MS, maxRetries: 0 });
+  // 보낼 곳: 학교 키면 OPENAI_BASE_URL(https://api.baze.co/v1/gateway), 비어 있으면 OpenAI 로 바로 보냅니다.
+  const openai = new OpenAI({
+    apiKey,
+    baseURL: process.env.OPENAI_BASE_URL?.trim() || undefined,
+    timeout: OPENAI_TIMEOUT_MS,
+    maxRetries: 0,
+  });
 
   try {
     const response = await openai.responses.parse({
@@ -58,7 +65,7 @@ export async function summarizeSourceText(sourceText: string): Promise<AiResult>
       input: sourceText,
       text: { format: zodTextFormat(AiOutput, "session_summary") },
       ...(effort && { reasoning: { effort: effort as OpenAI.ReasoningEffort } }),
-      store: false, // 응답을 나중에 다시 조회할 수 있게 OpenAI 에 보관하지 않음 (데이터 보존 정책 자체는 OpenAI 약관을 따름)
+      store: false, // 응답을 나중에 다시 조회할 수 있게 OpenAI 에 보관하지 않음 (데이터 보존 정책 자체는 OpenAI·게이트웨이 약관을 따름)
     });
 
     if (!response.output_parsed) {
